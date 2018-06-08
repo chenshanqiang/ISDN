@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <style type="text/css">
+            .tr {
+                height: 70px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>视频切换</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr style="background-color:#F0F0F0">
+                    <th style="width:30%">名称</th>
+                    <th style="width:70%">功能控制</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="tr">
+                    <td>投影输出</td>
+                    <td style="text-align:center;" id="tr_one"> </td>
+                </tr>
+                <tr class="tr">
+                    <td>讲台屏幕</td>
+                    <td style="text-align: center;" id="tr_two"> </td>
+                </tr>
+                <tr id="ppt_lock_tr" class="tr">
+                    <td>PPT锁定
+                        <span id='ppt_lock_status'>存在状态</span>
+                    </td>
+                    <td style="text-align: center;">
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="thirdbtn0">开</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="thirdbtn1">关</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript">
+            var usernameone = getCookienameone("usernameone"),
+                pwdone = getCookiepwdone("passone");
+            var tr_one_yes = "<button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn0' onmousedown=" + '"' + "mouse0('firstbtn0','firstbtn1','firstbtn4','firstbtn5','firstbtn2','firstbtn3')" + '"' + ">内置电脑</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn1' onmousedown=" + '"' + "mouse0('firstbtn1','firstbtn0','firstbtn4','firstbtn5','firstbtn2','firstbtn3')" + '"' + ">外接HDMI</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn2' onmousedown=" + '"' + "mouse0('firstbtn2','firstbtn0','firstbtn4','firstbtn5','firstbtn1','firstbtn3')" + '"' + ">实物展台</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn4' onmousedown=" + '"' + "mouse0('firstbtn4','firstbtn0','firstbtn5','firstbtn1','firstbtn2','firstbtn3')" + '"' + ">教师摄像头</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn5' onmousedown=" + '"' + "mouse0('firstbtn5','firstbtn0','firstbtn4','firstbtn1','firstbtn2','firstbtn3')" + '"' + ">学生摄像头</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn3' onmousedown=" + '"' + "mouse01('firstbtn3','firstbtn0','firstbtn1','firstbtn2','firstbtn4','firstbtn5')" + '"' + ">广播源</button>";
+            var tr_one_nodsppa = "<button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn0' onmousedown=" + '"' + "mouse2('firstbtn0','firstbtn1','firstbtn2','firstbtn3')" + '"' + ">内置电脑</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn1' onmousedown=" + '"' + "mouse2('firstbtn1','firstbtn0','firstbtn2','firstbtn3')" + '"' + ">外接HDMI</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn2' onmousedown=" + '"' + "mouse2('firstbtn2','firstbtn0','firstbtn1','firstbtn3')" + '"' + ">实物展台</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='firstbtn3' onmousedown=" + '"' + "mouse21('firstbtn3','firstbtn0','firstbtn1','firstbtn2')" + '"' + ">广播源</button>";
+            var tr_two_nodsppa = "<button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn0' onmousedown=" + '"' + "mouse2('secondbtn0','secondbtn1','secondbtn2','secondbtn3')" + '"' + ">内置电脑</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn1' onmousedown=" + '"' + "mouse2('secondbtn1','secondbtn0','secondbtn2','secondbtn3')" + '"' + ">外接HDMI</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn2' onmousedown=" + '"' + "mouse2('secondbtn2','secondbtn0','secondbtn1','secondbtn3')" + '"' + ">实物展台</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn3' onmousedown=" + '"' + "mouse21('secondbtn3','secondbtn0','secondbtn1','secondbtn2')" + '"' + ">广播源</button>";
+            var tr_two_yes = "<button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn0' onmousedown=" + '"' + "mouse0('secondbtn0','secondbtn1','secondbtn4','secondbtn5','secondbtn2','secondbtn3')" + '"' + ">内置电脑</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn1' onmousedown=" + '"' + "mouse0('secondbtn1','secondbtn0','secondbtn4','secondbtn5','secondbtn2','secondbtn3')" + '"' + ">外接HDMI</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn2' onmousedown=" + '"' + "mouse0('secondbtn2','secondbtn0','secondbtn4','secondbtn5','secondbtn1','secondbtn3')" + '"' + ">实物展台</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn4' onmousedown=" + '"' + "mouse0('secondbtn4','secondbtn0','secondbtn5','secondbtn1','secondbtn2','secondbtn3')" + '"' + ">教师摄像头</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn5' onmousedown=" + '"' + "mouse0('secondbtn5','secondbtn0','secondbtn4','secondbtn1','secondbtn2','secondbtn3')" + '"' + ">学生摄像头</button><button class='layui-btn layui-btn-primary layui-btn-radius' id='secondbtn3' onmousedown=" + '"' + "mouse01('secondbtn3','secondbtn0','secondbtn1','secondbtn2','secondbtn4','secondbtn5')" + '"' + ">广播源</button>";
+            if(usernameone != "dsppa" && pwdone != "dsppa") {
+                $('#tr_one').html(tr_one_nodsppa);
+                $('#tr_two').html(tr_two_nodsppa);
+                var smartpage_onload_one = function () {
+                    try {
+                        var resultthree = protocal_get('ppt', null);
+                        var resulttwo = protocal_get('broad', null);
+                        var resultone = protocal_get('video', null);
+                        /*ppt*/
+                        if(resultthree.length != 0) {
+                            switch(resultthree[0]) {
+                                case '0':
+                                    $('#ppt_lock_tr').css('background', '#EAE6E6');
+                                    $('#ppt_lock_status').html('（不存在）');
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                                    $('#thirdbtn0').off('click');
+                                    $('#thirdbtn1').off('click');
+                                    $('#thirdbtn0').off('mousedown');
+                                    $('#thirdbtn1').off('mousedown');
+                                    break;
+                                case '1':
+                                    $('#ppt_lock_tr').css('background', '');
+                                    $('#ppt_lock_status').html('')
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-primary layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-primary layui-btn-radius')
+                                    $('#thirdbtn0').off('click').on('click', function () {
+                                        video('videosrc_ppt', 'on');
+                                        return false;
+                                    })
+                                    $('#thirdbtn1').off('click').on('click', function () {
+                                        video('videosrc_ppt', 'off');
+                                        return false;
+                                    })
+                                    $('#thirdbtn0').off('mousedown').on('mousedown', function () {
+                                        mouse1('thirdbtn0', 'thirdbtn1');
+                                        return false;
+                                    })
+                                    $('#thirdbtn1').off('mousedown').on('mousedown', function () {
+                                        mouse1('thirdbtn1', 'thirdbtn0');
+                                        return false;
+                                    })
+                                    break;
+                            }
+                        } else {
+                            //throw "video result count failure"
+                        }
+                        /*广播源开始*/
+                        if(resulttwo.length < 2) {
+                            //throw "video result count failure"    
+                        } else {
+                            switch(resulttwo[0]) {
+                                case '0':
+                                    $('#firstbtn3').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius')
+                                    $('#firstbtn3').off('click');
+                                    $('#firstbtn3').off('mousedown');
+                                    break;
+                                case '1':
+                                    if(resultone[0] == '3') {
+                                        $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn3').attr('class', 'layui-btn layui-btn-radius');
+                                    } else {
+                                        $('#firstbtn3').attr('class', 'layui-btn layui-btn-primary layui-btn-radius');
+                                    }
+                                    $('#firstbtn3').off('click').on('click', function () {
+                                        video('videosrc_prout', '3');
+                                        return false;
+                                    })
+                                    $('firstbtn3').off('mousedown').on('mousedown', function () {
+                                        firstbtnthreefunconmousedownone();
+                                        return false;
+                                    })
+                                    break;
+                            }
+                            switch(resulttwo[1]) {
+                                case '0':
+                                    $('#secondbtn3').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius')
+                                    $('#secondbtn3').off('click');
+                                    $('#secondbtn3').off('mousedown');
+                                    break;
+                                case '1':
+                                    if(resultone[1] == '3') {
+                                        $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn3').attr('class', 'layui-btn layui-btn-radius');
+                                    } else {
+                                        $('#secondbtn3').attr('class', 'layui-btn layui-btn-primary layui-btn-radius');
+                                    }
+                                    $('#secondbtn3').off('click').on('click', function () {
+                                        video('videosrc_platsrc', '3');
+                                        return false;
+                                    })
+                                    $('#secondbtn3').off('mousedown').on('mousedown', function () {
+                                        secondbtnthreefunconmousedownone();
+                                        return false;
+                                    })
+                                    break;
+                            }
+                        }
+                        /*广播源结束*/
+                        /*获取投影输出
+                         *讲台屏幕
+                         *ppt锁定
+                         */
+                        if(resultone.length < 2) {
+                            //throw "video result count failure"
+                        } else {
+                            switch(resultone[0]) {
+                                case '0':
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '1':
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '2':
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '4':
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '5':
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                            switch(resultone[1]) {
+                                case '0':
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '1':
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '2':
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '4':
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '5':
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                            switch(resultone[2]) {
+                                case 'on':
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case 'off':
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                        }
+                    } catch(err) {
+                        //alert(err);
+                    }
+                }
+                smartpage_onload_one();
+                setInterval(function () {
+                    smartpage_onload_one()
+                }, 2500)
+            } else {
+                $('#tr_one').html(tr_one_yes);
+                $('#tr_two').html(tr_two_yes);
+                var smartpage_onload_two = function () {
+                    try {
+                        var resultthree = protocal_get('ppt', null);
+                        var resulttwo = protocal_get('broad', null);
+                        var resultone = protocal_get('video', null);
+                        /*ppt*/
+                        if(resultthree.length != 0) {
+                            switch(resultthree[0]) {
+                                case '0':
+                                    $('#ppt_lock_tr').css('background', '#EAE6E6');
+                                    $('#ppt_lock_status').html('（不存在）');
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius')
+                                    $('#thirdbtn0').off('click');
+                                    $('#thirdbtn1').off('click');
+                                    $('#thirdbtn0').off('mousedown');
+                                    $('#thirdbtn1').off('mousedown');
+                                    break;
+                                case '1':
+                                    $('#ppt_lock_tr').css('background', '');
+                                    $('#ppt_lock_status').html('');
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-primary layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-primary layui-btn-radius')
+                                    $('#thirdbtn0').off('click').on('click', function () {
+                                        video('videosrc_ppt', 'on');
+                                        return false;
+                                    })
+                                    $('#thirdbtn1').off('click').on('click', function () {
+                                        video('videosrc_ppt', 'off');
+                                        return false;
+                                    })
+                                    $('#thirdbtn0').off('mousedown').on('mousedown', function () {
+                                        mouse1('thirdbtn0', 'thirdbtn1');
+                                        return false;
+                                    })
+                                    $('#thirdbtn1').off('mousedown').on('mousedown', function () {
+                                        mouse1('thirdbtn1', 'thirdbtn0');
+                                        return false;
+                                    })
+                                    break;
+                            }
+                        } else {
+                            //throw "video result count failure"
+                        }
+                        /*广播源开始*/
+                        if(resulttwo.length < 2) {
+                            //throw "video result count failure"    
+                        } else {
+                            switch(resulttwo[0]) {
+                                case '0':
+                                    $('#firstbtn3').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                                    $('#firstbtn3').off('click');
+                                    $('#firstbtn3').off('mousedown');
+                                    break;
+                                case '1':
+                                    if(resultone[0] == '3') {
+                                        $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#firstbtn3').attr('class', 'layui-btn layui-btn-radius');
+                                    } else {
+                                        $('#firstbtn3').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    }
+                                    $('#firstbtn3').off('click').on('click', function () {
+                                        video('videosrc_prout', '3');
+                                        return false;
+                                    })
+                                    $('#firstbtn3').off('mousedown').on('mousedown', function () {
+                                        firstbtnthreefunconmousedowntwo();
+                                        return false;
+                                    })
+                                    break;
+                            }
+                            switch(resulttwo[1]) {
+                                case '0':
+                                    $('#secondbtn3').attr('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                                    $('#secondbtn3').off('click');
+                                    $('#secondbtn3').off('mousedown');
+                                    break;
+                                case '1':
+                                    if(resultone[1] == '3') {
+                                        $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                        $('#secondbtn3').attr('class', 'layui-btn layui-btn-radius');
+                                    } else {
+                                        $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    }
+                                    $('#secondbtn3').off('click').on('click', function () {
+                                        video('videosrc_platsrc', '3');
+                                        return false;
+                                    })
+                                    $('#secondbtn3').off('mousedown').on('mousedown', function () {
+                                        secondbtnthreefunconmousedowntwo();
+                                        return false;
+                                    })
+                                    break;
+                            }
+                        }
+                        /*广播源结束*/
+                        /*获取投影输出讲台屏幕ppt锁定*/
+                        if(resultone.length < 2) {
+                            //throw "video result count failure"
+                        } else {
+                            switch(resultone[0]) {
+                                case '0':
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '1':
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '2':
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '4':
+                                    $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '5':
+                                    $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                            switch(resultone[1]) {
+                                case '0':
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '1':
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '2':
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '4':
+                                    $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case '5':
+                                    $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                            switch(resultone[2]) {
+                                case 'on':
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                                case 'off':
+                                    $('#thirdbtn1').attr('class', 'layui-btn layui-btn-radius');
+                                    $('#thirdbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                                    break;
+                            }
+                        }
+                    } catch(err) {
+                        //alert(err);
+                    }
+                }
+                smartpage_onload_two();
+                setInterval(function () {
+                    smartpage_onload_two()
+                }, 3000)
+            }
+            layui.use(['element', 'jquery'], function () {
+                var $ = layui.jquery;
+                $('#firstbtn0').off('click').on('click', function () {
+                    video('videosrc_prout', '0');
+                    return false;
+                })
+                $('#firstbtn1').off('click').on('click', function () {
+                    video('videosrc_prout', '1');
+                    return false;
+                })
+                $('#firstbtn2').off('click').on('click', function () {
+                    video('videosrc_prout', '2');
+                    return false;
+                })
+                $('#firstbtn4').off('click').on('click', function () {
+                    video('videosrc_prout', '4');
+                    return false;
+                })
+                $('#firstbtn5').off('click').on('click', function () {
+                    video('videosrc_prout', '5');
+                    return false;
+                })
+                $('#secondbtn0').off('click').on('click', function () {
+                    video('videosrc_platsrc', '0');
+                    return false;
+                })
+                $('#secondbtn1').off('click').on('click', function () {
+                    video('videosrc_platsrc', '1');
+                    return false;
+                })
+                $('#secondbtn2').off('click').on('click', function () {
+                    video('videosrc_platsrc', '2');
+                    return false;
+                })
+                $('#secondbtn4').off('click').on('click', function () {
+                    video('videosrc_platsrc', '4');
+                    return false;
+                })
+                $('#secondbtn5').off('click').on('click', function () {
+                    video('videosrc_platsrc', '5');
+                    return false;
+                })
+            });
+            /*the */
+            function firstbtnthreefunconmousedownone() {
+                $('#firstbtn3').attr('class', 'layui-btn layui-btn-radius');
+                $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function secondbtnthreefunconmousedownone() {
+                $('#secondbtn3').attr('class', 'layui-btn layui-btn-radius');
+                $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function firstbtnthreefunconmousedowntwo() {
+                $('#firstbtn3').attr('class', 'layui-btn layui-btn-radius');
+                $('#firstbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#firstbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function secondbtnthreefunconmousedowntwo() {
+                $('#secondbtn3').attr('class', 'layui-btn layui-btn-radius');
+                $('#secondbtn0').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn1').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn2').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn4').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#secondbtn5').attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function mouse0(id1, id2, id3, id4, id5, id6) {
+                $('#' + id1).attr('class', 'layui-btn layui-btn-radius');
+                $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id5).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                var status = $('#' + id6).attr('class');
+                if(status.indexOf("disabled") > 0) {
+                    $('#' + id6).attr('class', 'layui-btn layui-btn-radius layui-btn-disabled');
+                } else {
+                    $('#' + id6).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                }
+            }
+
+            function mouse01(id6, id1, id2, id3, id4, id5) {
+                var status = $('#' + id6).attr('class');
+                if(status.indexOf("disabled") > 0) {
+                    $('#' + id6).attr('class', 'layui-btn layui-btn-radius layui-btn-disabled');
+                } else {
+                    $('#' + id1).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id5).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id6).attr('class', 'layui-btn layui-btn-radius');
+                }
+            }
+
+            function mouse2(id1, id2, id3, id4) {
+                $('#' + id1).attr('class', 'layui-btn layui-btn-radius');
+                $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                var status = $('#' + id4).attr('class');
+                if(status.indexOf("disabled") > 0) {
+                    $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-disabled');
+                } else {
+                    $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                }
+            }
+
+            function mouse21(id4, id1, id2, id3) {
+                var status = $('#' + id4).attr('class');
+                if(status.indexOf("disabled") > 0) {
+                    $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-disabled');
+                } else {
+                    $('#' + id1).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                    $('#' + id4).attr('class', 'layui-btn layui-btn-radius');
+                }
+            }
+
+            function mouse1(id1, id2) {
+                $('#' + id1).attr('class', 'layui-btn layui-btn-radius');
+                $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function video(videoname, num) {
+                try {
+                    var result = protocal_set(videoname, num);
+                    if('ok' == result[0]) {
+                        return false;
+                    } else {
+                        throw videoname + " result failure";
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+        </script>
+    </body>
+</html>

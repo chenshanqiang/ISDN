@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" href="./css/main.css">
+        <style type="text/css">
+            #ipTest, #portTest, #tc_od11, #tc_od21, #tc_od31, #tc_od41, #tc_od51, #tc_od61, #sd_od11, #sd_od21, #sd_od31, #sd_od41 {
+                color: red;
+                margin-left: 210px;
+            }
+            input {
+                width: 400px!important;
+            }
+        </style>
+    </head>
+    <body onload="onloadmain()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>导播命令配置</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                <legend>录播摄像头配置</legend>
+            </fieldset>
+            <div class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">IP</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_ip('ip','ipTest')" type="text" id="ip" lay-verify="title" name="title" autocomplete="off" class="layui-input"> </div>
+                    <div id='ipTest' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">端口</label>
+                    <div class="layui-input-inline">
+                        <input onkeyup="check_port('port','portTest')" type="text" id="port" lay-verify="title" name="title" autocomplete="off" class="layui-input"> </div>
+                    <div id='portTest' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-primary" onclick="ipPort('ip','port','networkcmd')">提交</button>
+                    </div>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>教师摄像头</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">锁定目标</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od1','tc_od11')" type="text" id="tc_od1" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od11' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">目标丢失</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od2','tc_od21')" type="text" id="tc_od2" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od21' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">走下讲台</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od3','tc_od31')" type="text" id="tc_od3" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od31' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">走上讲台</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od4','tc_od41')" type="text" id="tc_od4" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od41' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">老师运动</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od5','tc_od51')" type="text" id="tc_od5" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od51' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">老师停止</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('tc_od6','tc_od61')" type="text" id="tc_od6" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='tc_od61' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-primary" onclick="ord_tc('tc_od1','tc_od2','tc_od3','tc_od4','tc_od5','tc_od6','teachercmd')">提交</button>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding-left: 20px;">
+                    <div class="layui-form-mid layui-word-aux">注：请输入十六进制数与英文逗号的组合或者十六进制数与空格组合。最后一位后面不能有空格，十六进制数必须是俩位,如：“01,01,01,aa,02,”。</div>
+                </div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>学生摄像头</legend>
+                </fieldset>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学生起立</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('sd_od1','sd_od11')" type="text" id="sd_od1" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='sd_od11' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">学生坐下</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('sd_od2','sd_od21')" type="text" id="sd_od2" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='sd_od21' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">特写就位</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('sd_od3','sd_od31')" type="text" id="sd_od3" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='sd_od31' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">多目标</label>
+                    <div class="layui-input-inline">
+                        <input onchange="check_order('sd_od4','sd_od41')" type="text" id="sd_od4" lay-verify="title" name="title" autocomplete="off" placeholder="" class="layui-input"> </div>
+                    <div id='sd_od41' class="layui-form-mid"></div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-primary" onclick="ord_sd('sd_od1','sd_od2','sd_od3','sd_od4','studentcmd')">提交</button>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="padding-left: 20px;">
+                    <div class="layui-form-mid layui-word-aux">注：请输入十六进制数与英文逗号的组合或者十六进制数与空格组合。最后一位后面不能有空格，十六进制数必须是俩位,如：“01,01,01,aa,02,”。</div>
+                </div>
+                <div style="height: 50px;"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src='./js/protocal.js'></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript" src="./js/parse.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer'], function () {
+                var layer = layui.layer;
+            });
+            //Test ip
+            function check_ip(id, id1) {
+                var str = document.getElementById(id).value;
+                if(str != '') {
+                    var reg = /^(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/;
+                    if(!reg.test(str)) {
+                        document.getElementById(id1).style.display = "";
+                        document.getElementById(id1).innerHTML = "IP输入格式错误,请重新输入！";
+                    } else {
+                        document.getElementById(id1).style.display = "none";
+                    }
+                } else {
+                    document.getElementById(id1).innerHTML = "";
+                }
+            }
+            //Test port     
+            function check_port(id, id1) {
+                var str = document.getElementById(id).value;
+                var reg = /^\d{0,}$/;
+                if(str >= 1 && str <= 65535 && reg.test(str)) {
+                    document.getElementById(id1).style.display = "none";
+                } else {
+                    document.getElementById(id).value = '';
+                    document.getElementById(id1).style.display = "";
+                    document.getElementById(id1).innerHTML = "端口的输入范围设置为：1-65535，请重新输入！";
+                }
+            }
+            //Test order format
+            function check_order(id, id1) {
+                var str = document.getElementById(id).value;
+                var reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
+                if(!reg.test(str)) {
+                    document.getElementById(id1).style.display = "";
+                    document.getElementById(id1).innerHTML = "输入的格式或范围有误！";
+                } else {
+                    document.getElementById(id1).style.display = "none";
+                }
+            }
+            //when the page is loaded, the function is executed to get the initial data;
+            function onloadmain() {
+                try {
+                    var resultone = protocal_get('studentcmd', null);
+                    var resulttwo = protocal_get("teachercmd", null);
+                    //var resultthree = protocal_get("blackboardcmd", null);
+                    var resultzero = protocal_get("networkcmd", null)
+                    if(resultzero < 2) {} else {
+                        document.getElementById('ip').value = resultzero[0];
+                        document.getElementById('port').value = resultzero[1];
+                    }
+                    if(resultone < 4) {} else {
+                        document.getElementById('sd_od1').value = resultone[0];
+                        document.getElementById('sd_od2').value = resultone[1];
+                        document.getElementById('sd_od3').value = resultone[2];
+                        document.getElementById('sd_od4').value = resultone[3];
+                    }
+                    if(resulttwo < 6) {} else {
+                        document.getElementById('tc_od1').value = resulttwo[0];
+                        document.getElementById('tc_od2').value = resulttwo[1];
+                        document.getElementById('tc_od3').value = resulttwo[2];
+                        document.getElementById('tc_od4').value = resulttwo[3];
+                        document.getElementById('tc_od5').value = resulttwo[4];
+                        document.getElementById('tc_od6').value = resulttwo[5];
+                    }
+                } catch(err) {}
+            }
+
+            function ord_tc(id1, id2, id3, id4, id5, id6, cmd) {
+                var od1 = document.getElementById(id1).value;
+                var od2 = document.getElementById(id2).value;
+                var od3 = document.getElementById(id3).value;
+                var od4 = document.getElementById(id4).value;
+                var od5 = document.getElementById(id5).value;
+                var od6 = document.getElementById(id6).value;
+                var result = od1 + '&' + od2 + '&' + od3 + '&' + od4 + '&' + od5 + '&' + od6;
+                var count = parse_result(result);
+                if(count[0] != '' && count[1] != '' && count[2] != '' && count[3] != '' && count[4] != '' && count[5] != '') {
+                    var reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
+                    if(!reg.test(od1) || !reg.test(od2) || !reg.test(od3) || !reg.test(od4) || !reg.test(od5) || !reg.test(od6)) {
+                        layer.msg('输入的数据格式有误，提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    } else {
+                        try {
+                            var result = protocal_set(cmd, result);
+                            if(result[0] == 'ok') {
+                                layer.msg('提交成功！', {
+                                    time: 3000,
+                                    icon: 1,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            } else {
+                                layer.msg('提交失败！', {
+                                    time: 3000,
+                                    icon: 2,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            }
+                        } catch(err) {
+                            alert(err);
+                        }
+                    }
+                } else {
+                    layer.msg('数据不能为空，提交失败！', {
+                        time: 3000,
+                        icon: 2,
+                        anim: 0,
+                        skin: 'message',
+                        shade: [0.5, '#393D49']
+                    });
+                }
+            }
+
+            function ord_sd(id1, id2, id3, id4, cmd) {
+                var od1 = document.getElementById(id1).value;
+                var od2 = document.getElementById(id2).value;
+                var od3 = document.getElementById(id3).value;
+                var od4 = document.getElementById(id4).value;
+                var result = od1 + '&' + od2 + '&' + od3 + '&' + od4;
+                var count = parse_result(result);
+                if(count[0] != '' && count[1] != '' && count[2] != '' && count[3] != '') {
+                    var reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
+                    if(!reg.test(od1) || !reg.test(od2) || !reg.test(od3) || !reg.test(od4)) {
+                        layer.msg('输入的数据格式有误，提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    } else {
+                        try {
+                            var result = protocal_set(cmd, result);
+                            if(result[0] == 'ok') {
+                                layer.msg('提交成功！', {
+                                    time: 3000,
+                                    icon: 1,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            } else {
+                                layer.msg('提交失败！', {
+                                    time: 3000,
+                                    icon: 2,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            }
+                        } catch(err) {
+                            alert(err);
+                        }
+                    }
+                } else {
+                    layer.msg('数据不能为空，提交失败！', {
+                        time: 3000,
+                        icon: 2,
+                        anim: 0,
+                        skin: 'message',
+                        shade: [0.5, '#393D49']
+                    });
+                }
+            }
+
+            function ipPort(id1, id2, cmd) {
+                var od1 = document.getElementById(id1).value;
+                var od2 = document.getElementById(id2).value;
+                var result = od1 + '&' + od2;
+                var count = parse_result(result);
+                if(count[0] != '' && count[1] != '') {
+                    var regip = /^(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/;
+                    if(!regip.test(od1) || od2 < 0 || od2 > 65535) {
+                        layer.msg('数据输入范围有误，提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    } else {
+                        try {
+                            var result = protocal_set(cmd, result);
+                            if(result[0] == 'ok') {
+                                top.layer.open({
+                                    title: false,
+                                    icon: 6,
+                                    time: 250000,
+                                    content: '正在重启系统...',
+                                    btn: false,
+                                    skin: "layui-layer-molv",
+                                    closeBtn: 0,
+                                })
+                                setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
+                                setTimeout(function () {
+                                    window.parent.location.reload();
+                                }, 25000);
+                            } else {
+                                layer.msg('提交失败！', {
+                                    time: 3000,
+                                    icon: 2,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            }
+                        } catch(err) {
+                            alert(err);
+                        }
+                    }
+                } else {
+                    layer.msg('数据不能为空，提交失败！', {
+                        time: 3000,
+                        icon: 2,
+                        anim: 0,
+                        skin: 'message',
+                        shade: [0.5, '#393D49']
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css">
+        <style type="text/css">
+            .shan {
+                background: red!important;
+            }
+            input {
+                height: 17px;
+                width: 17px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>配置支持</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <form class="layui-form" lay-filter="form">
+            <table class="layui-table">
+                <thead>
+                    <tr style="background-color:#F0F0F0">
+                        <th style="width:32%">设备名称</th>
+                        <th style="width:34%">状态</th>
+                        <th style="width:33%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>是否组播</td>
+                        <td>
+                            <span id="zubo"></span>
+                        </td>
+                        <td style="text-align: center;" style="line-height: 10px;">
+                            <input type="radio" id='cstart' title="是" value="on" name="cstatus" lay-filter="cstatus" />
+                            <input type="radio" id='cstop' title="否" value="off" name="cstatus" lay-filter="cstatus" /> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/local_info.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.jquery;　
+                try {
+                    var result = protocal_get('configure', null);
+                    if(result.length != 2) {} else {
+                        if(result[0] == 'on') {
+                            form.val('form', {
+                                'cstatus': 'on'
+                            })
+                            $("#zubo").html("是");
+                        } else {
+                            form.val('form', {
+                                'cstatus': 'off'
+                            })
+                            $("#zubo").html("否");
+                        }
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+                form.on('radio(cstatus)', function (data) {
+                    if(data.value == 'on') {
+                        layer.open({
+                            title: ' ',
+                            icon: 3,
+                            content: '是否确定设置该功能？',
+                            btn: ['是', '否'],
+                            skin: "layui-layer-molv",
+                            closeBtn: 1,
+                            yes: function (index) {
+                                live_interactive_status('configure_mul', 'on');
+                                $("#zubo").html("是");
+                                layer.close(index);
+                                var result = protocal_set_resystem("reset", 'system');
+                                if(result[0] == 'ok') {
+                                    top.layer.open({
+                                        title: false,
+                                        icon: 6,
+                                        time: 250000,
+                                        content: '正在重启系统...',
+                                        btn: false,
+                                        skin: "layui-layer-molv",
+                                        closeBtn: 0,
+                                    })
+                                    setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
+                                    setTimeout(function () {
+                                        window.parent.location.reload();
+                                    }, 25000);
+                                } else {
+                                    layer.msg('重启失败！', {
+                                        time: 3000,
+                                        icon: 2,
+                                        anim: 0,
+                                        skin: 'message',
+                                        shade: [0.5, '#393D49']
+                                    });
+                                }
+                            },
+                            btn2: function (index) {
+                                form.val('form', {
+                                    "cstatus": 'off'
+                                })
+                                $("#zubo").html("否");
+                                layer.close(index);
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            title: ' ',
+                            icon: 3,
+                            content: '是否确定设置该功能？',
+                            btn: ['是', '否'],
+                            skin: "layui-layer-molv",
+                            closeBtn: 1,
+                            yes: function (index) {
+                                live_interactive_status('configure_mul', 'off');
+                                $("#zubo").html("否");
+                                layer.close(index);
+                                var result = protocal_set_resystem('reset', 'system');
+                                if(result[0] == 'ok') {
+                                    top.layer.open({
+                                        title: false,
+                                        icon: 6,
+                                        time: 250000,
+                                        content: '正在重启系统...',
+                                        btn: false,
+                                        skin: "layui-layer-molv",
+                                        closeBtn: 0,
+                                    })
+                                    setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
+                                    setTimeout(function () {
+                                        window.parent.location.reload();
+                                    }, 25000);
+                                } else {
+                                    layer.msg('重启失败！', {
+                                        time: 3000,
+                                        icon: 2,
+                                        anim: 0,
+                                        skin: 'message',
+                                        shade: [0.5, '#393D49']
+                                    });
+                                }
+                            },
+                            btn2: function (index) {
+                                form.val('form', {
+                                    "cstatus": 'on'
+                                })
+                                $("#zubo").html("是");
+                                layer.close(index);
+                            }
+                        });　
+                    }
+                })
+            });
+
+            function live_interactive_status(live_interactive, status) {
+                try {
+                    var result = protocal_set(live_interactive, status);
+                    if(result[0] == 'ok') {
+                        return false;
+                    } else {
+                        //throw comstatus + " result unkown error";
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+        </script>
+    </body>
+</html>

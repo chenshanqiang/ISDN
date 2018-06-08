@@ -1,0 +1,133 @@
+<!DOCTYPE html >
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./layui/css/layui.css">
+        <link rel="stylesheet" type="text/css" href="./css/login.css" />
+        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css"> </head>
+    <body onkeydown="keyLogin()">
+        <div class="top">
+            <img src="images/login_logo.png" /> </div>
+        <div style="width: 20%; margin:0px auto;text-align: center;font-size: 2em;font-weight:bold;" id="className"> </div>
+        <div class="layui-form uspw">
+            <div class="layui-form-item" style="background-color: ;">
+                <label class="layui-form-label" style="background-color:;">
+                    <i class="fa fa-user fa-lg" aria-hidden="true" style="font-size: 30px;"></i>
+                </label>
+                <div class="layui-input-block">
+                    <input class="layui-input" id="username" type="text" placeholder='Username' name="user" /> </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <i class="fa fa-key fa-fw" aria-hidden="true" style="font-size: 16px;"></i>
+                </label>
+                <div class="layui-input-block">
+                    <input class="layui-input" id="pass" type="password" placeholder='Password' name="pwd" /> </div>
+            </div>
+            <div class="login">
+                <button class="layui-btn layui-btn-primary layui-btn-radius" onclick="login_main()" id='button'> 登录 </button>
+            </div>
+            <div style="text-align:center; color:white;font-size: 15px;margin-top: 10%;">
+                <div>©&nbsp;&nbsp;2017&nbsp;广州市迪士普智慧科技有限公司&nbsp;&nbsp;IDMS9902_V00.08</div>
+            </div>
+        </div>
+        <script type="text/javascript" src="./js/login_protocal.js"></script>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript" src="./js/base64.js"></script>
+        <script type="text/javascript">
+            (function () {
+                try {
+                    var base = new Base64();
+                    var loginName = protocal_get("login_name", null);
+                    $('#className').html(base.decode(loginName[0]));
+                } catch(err) {}
+            })();
+            layui.use('layer', function () {
+                var layer = layui.layer,
+                    $ = layui.jquery;
+                $('#username').focus();
+            });
+
+            function login_main() {
+                try {
+                    var username = $('#username').val(),
+                        pass = $('#pass').val(),
+                        base = new Base64(),
+                        userNameOne = base.encode(username);
+                    if(username == '') {
+                        layer.msg('用户名为空！', {
+                            time: 2000,
+                            icon: 5,
+                            anim: 6,
+                            skin: 'message'
+                        });
+                    } else {
+                        if(pass == '') {
+                            layer.msg('密码为空！', {
+                                time: 2000,
+                                icon: 5,
+                                anim: 6,
+                                skin: 'message'
+                            });
+                        } else {
+                            setCookie("username", 'userdsppa', "pass", 'pwddsppa', "usernameone", username, "passone", pass)
+                            if(username == "dsppa" && pass == "dsppa") {
+                                location.href = './main.html';
+                            } else {
+                                var result = protocal_login(userNameOne, pass);
+                                if('ok' == result[0]) {
+                                    setCookie("username", 'user', "pass", 'pwd', "usernameone", username, "passone", pass);
+                                    location.href = './main.html';
+                                } else {
+                                    layer.msg('用户名或密码输入信息有错误！', {
+                                        time: 2000,
+                                        icon: 2,
+                                        anim: 6,
+                                        skin: 'message'
+                                    });
+                                }
+                            }
+                        }
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+
+            function keyLogin() {
+                if(event.keyCode == 13) //回车键的键值为13
+                    document.getElementById("button").click(); //调用登录按钮的登录事件
+            }
+
+            function getCookiename(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if(c.indexOf(name) == 0) return c.substring(name.length, c.length);
+                }
+                return "";
+            }
+
+            function getCookiepwd(cpass) {
+                var pass = cpass + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if(c.indexOf(pass) == 0) return c.substring(pass.length, c.length);
+                }
+                return "";
+            }
+
+            function setCookie(cname, cvaluename, cpass, cvaluepass, cnameone, cvaluenameone, cpassone, cvaluepassone) {
+                document.cookie = cname + "=" + cvaluename;
+                document.cookie = cpass + "=" + cvaluepass;
+                document.cookie = cnameone + "=" + cvaluenameone;
+                document.cookie = cpassone + "=" + cvaluepassone;
+            }
+        </script>
+    </body>
+</html>

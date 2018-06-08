@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" href="./css/main.css"> </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>日志导出</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon">&#x1002;</i>
+            </a>
+        </div>
+        <div class="layui-form">
+            <table class="layui-table">
+                <thead>
+                    <tr style="background-color:#F0F0F0">
+                        <th style="width:50%">文件名称</th>
+                        <th style="width:50%">操作</th>
+                    </tr>
+                </thead>
+                <tbody id='tbody' style="height:100px!important;"> </tbody>
+            </table>
+        </div>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/update.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'jquery'], function () {
+                var element = layui.element(),
+                    $ = layui.jquery;
+                try {
+                    result = protocal_get_one('log_file', null);
+                    if(result.length < 1) {
+                        return;
+                    }
+                    for(var i = 0; i < result.length; i++) {
+                        var trhtml = "<tr><td>" + result[i] + "</td><td style='text-align:center;'><button class='layui-btn layui-btn-normal' onclick='loadingfile(this)'>文件下载</button></td></tr>";
+                        $('#tbody').append(trhtml);
+                    }
+                } catch(err) {}
+            })
+
+            function loadingfile(parse) {
+                var filename = $(parse).parent().prev().text();
+                var test;
+                switch(filename) {
+                    case "wtmp":
+                        test = 'wtmp';
+                        break;
+                    case "UpgradePrint.log":
+                        test = "UpgradePrint.log";
+                        break;
+                    case "Daemon.log":
+                        test = "Daemon.log";
+                        break;
+                    case "Boa.log":
+                        test = "Boa.log";
+                        break;
+                    case "udpserver.log":
+                        test = "udpserver.log";
+                        break;
+                    case "Upgrade.logs":
+                        test = "Upgrade.log";
+                        break;
+                    case "MediaApp.log":
+                        test = "MediaApp.log";
+                        break;
+                    case "ServerApp.log":
+                        test = 'ServerApp.log';
+                        break;
+                    case "upgrade.log":
+                        test = "upgrade.log";
+                        break;
+                    case "LeakMemory.log":
+                        test = "LeakMemory.log";
+                        break;
+                    case "UpgradeService_9903.log":
+                        test = "UpgradeService_9903.log";
+                        break;
+                    case "LogRotate.log":
+                        test = "LogRotate.log";
+                        break;
+                    case "TerminalNet.log":
+                        test = "TerminalNet.log";
+                        break;
+                    case "WatChdog.log":
+                        test = "WatChdog.log";
+                        break;
+                    default:
+                        test = "Looking forward to the Weekend";
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "/cgi-bin/download.cgi",
+                    data: test,
+                    success: function (msg) {
+                        aler('请求成功！');
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

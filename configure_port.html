@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <style type="text/css">
+            #f_ord11, #f_ord21, #f_ord31, #f_ord41 {
+                color: red;
+                margin-left: 100px;
+            }
+        </style>
+    </head>
+    <body onload="onloadmain()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>串口配置</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <form class="layui-form layui-form-pane" style="padding-top:20px;">
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影机控制</label>
+                <div class="layui-input-block">
+                    <input name="fstatus" id='fstart' value="on" title="启用" type="radio" lay-filter='radio'>
+                    <input name="fstatus" id='fstop' value="off" title="关闭" type="radio" lay-filter='radio'> </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">串口命令</label>
+                <div class="layui-input-inline">
+                    <select id='selc1' name="tablename1" lay-filter='selc1'>
+                        <option value="波特率" disabled="">波特率</option>
+                        <option value="4800">4800</option>
+                        <option value="9600">9600</option>
+                        <option value="19200">19200</option>
+                        <option value="38400">38400</option>
+                        <option value="115200">115200</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select id='selc2' name="tablename2" lay-filter='selc2'>
+                        <option value="停止位" disabled="">停止位</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select id='selc3' name="tablename3" lay-filter='selc3'>
+                        <option value="数据位" disabled="">数据位</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select id='selc4' name="tablename4" lay-filter='selc4'>
+                        <option value="检验位" disabled="">检验位</option>
+                        <option value="None">None</option>
+                        <option value="Odd">Odd</option>
+                        <option value="Even">Even</option>
+                        <option value="Space">Space</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select id='selc5' name="tablename5" lay-filter='selc5'>
+                        <option value="流控位" disabled="">流控位</option>
+                        <option value="None">None</option>
+                        <option value="RTS">RTS</option>
+                        <option value="CTS">CTS</option>
+                        <option value="RTS/CTS">RTS/CTS</option>
+                    </select>
+                </div>
+            </div>
+            <div class='layui-form-item'>
+                <label class="layui-form-label" style="width: 10%;">开启投影机</label>
+                <div class="layui-input-block" style="margin-left: 10%;">
+                    <input onblur="check_order('f_ord1','f_ord11')" id='f_ord1' type="text" name="title1" autocomplete="off" class="layui-input"> </div>
+                <div id='f_ord11' class="layui-form-mid" style="display: none;"></div>
+            </div>
+            <div class='layui-form-item'>
+                <label class="layui-form-label" style="width: 10%;">关闭投影机</label>
+                <div class="layui-input-block" style="margin-left: 10%;">
+                    <input onblur="check_order('f_ord2','f_ord21')" id='f_ord2' type="text" name="title2" autocomplete="off" class="layui-input"> </div>
+                <div id='f_ord21' class="layui-form-mid" style="display: none;"></div>
+            </div>
+            <div class='layui-form-item'>
+                <label class="layui-form-label" style="width: 10%;">视频信号源1</label>
+                <div class="layui-input-block" style="margin-left:10%;">
+                    <input onblur="check_order('f_ord3','f_ord31')" id='f_ord3' type="text" name="title3" autocomplete="off" class="layui-input"> </div>
+                <div id='f_ord31' class="layui-form-mid" style="display: none;"></div>
+            </div>
+            <div class='layui-form-item'>
+                <label class="layui-form-label" style="width: 10%;">视频信号源2</label>
+                <div class="layui-input-block" style="margin-left:10%;">
+                    <input onblur="check_order('f_ord4','f_ord41')" id='f_ord4' type="text" name="title4" autocomplete="off" class="layui-input"> </div>
+                <div id='f_ord41' class="layui-form-mid" style="display: none;"></div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left:10%;">
+                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
+                </div>
+            </div>
+            <div class="layui-form-item" style="padding-left: 20px;">
+                <div class="layui-form-mid layui-word-aux">注：请输入十六进制数与英文逗号的组合或者十六进制数与空格组合。最后一位后面不能有空格，十六进制数必须是俩位,如：“01,01,01,aa,02,”。</div>
+            </div>
+        </form>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form;
+                onloadmain = function () {
+                    try {
+                        var resultone = protocal_get('COM1', null);
+                        /*var resultone = ['off', '4800', '1', '5', 'None', 'None', '01,', '01,', '01,', '01,'];*/
+                        if(resultone.length < 10) {
+                            //throw "COM1 result count failure";
+                        } else {
+                            $('#selc1').val(resultone[1]);
+                            $('#selc2').val(resultone[2]);
+                            $('#selc3').val(resultone[3]);
+                            $('#selc4').val(resultone[4]);
+                            $('#selc5').val(resultone[5]);
+                            $('#f_ord1').val(resultone[6]);
+                            $('#f_ord2').val(resultone[7]);
+                            $('#f_ord3').val(resultone[8]);
+                            $('#f_ord4').val(resultone[9]);
+                            if(resultone[0] == 'on') {
+                                $('#fstart').prop('checked', ' ');
+                                show('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
+                            } else {
+                                $('#fstop').prop('checked', ' ');
+                                hide('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
+                            }
+                        }
+                        form.render();
+                    } catch(err) {}
+                }
+                check_order = function (id, id1) {
+                	var str = $('#'+id).val(),
+                        reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
+                    if(reg.test(str) || str == '') {
+                        $('#' + id1).css('display', 'none');
+                    } else {
+                        $('#' + id1).css('display', '');
+                        $('#' + id1).text('输入的格式或范围有误！');
+                    }
+                    form.render();
+                }
+                form.on('radio(radio)', function (data) {
+                    if(data.value == 'on') {
+                        $('#fstart').prop('checked', ' ');
+                        show('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
+                    } else {
+                        $('#fstop').prop('checked', ' ');
+                        hide('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
+                    }
+                    form.render();
+                })
+                form.on('submit(demo1)', function (data) {
+                    var result = data.field.fstatus + '&' + data.field.tablename1 + '&' + data.field.tablename2 + '&' + data.field.tablename3 + '&' + data.field.tablename4 + '&' + data.field.tablename5 + '&' + data.field.title1 + '&' + data.field.title2 + '&' + data.field.title3 + '&' + data.field.title4;
+                    if(data.field.fstatus != '' && data.field.tablename1 != '' && data.field.tablename2 != '' && data.field.tablename3 != '' && data.field.tablename4 != '' && data.field.tablename5 != '' && data.field.title1 != '' && data.field.title2 != '' && data.field.title3 != '' && data.field.title4 != '') {
+                        var reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
+                        if(!reg.test(data.field.title1) || !reg.test(data.field.title2) || !reg.test(data.field.title3) || !reg.test(data.field.title4)) {
+                            layer.msg('输入的数据格式有误，提交失败！', {
+                                time: 3000,
+                                icon: 2,
+                                anim: 0,
+                                skin: 'message',
+                                shade: [0.5, '#393D49']
+                            });
+                        } else {
+                            try {
+                                var result = protocal_set('COM1', result);
+                                if(result[0] == 'ok') {
+                                    layer.msg('提交成功！', {
+                                        time: 3000,
+                                        icon: 1,
+                                        anim: 0,
+                                        skin: 'message',
+                                        shade: [0.5, '#393D49']
+                                    });
+                                } else {
+                                    layer.msg('提交失败！', {
+                                        time: 3000,
+                                        icon: 2,
+                                        anim: 0,
+                                        skin: 'message',
+                                        shade: [0.5, '#393D49']
+                                    });
+                                }
+                            } catch(err) {
+                                alert(err);
+                            }
+                        }
+                    } else {
+                        layer.msg('数据不能为空，提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    }
+                    return false;
+                });
+                $("#sstart").click(function () {
+                    show('selcc1', 'selcc2', 'selcc3', 'selcc4', 'selcc5', 's_ord1', 's_ord2', 's_ord3', 's_ord4');　　　　
+                });
+                $("#sstop").click(function () {
+                    hide('selcc1', 'selcc2', 'selcc3', 'selcc4', 'selcc5', 's_ord1', 's_ord2', 's_ord3', 's_ord4');　　　　
+                });
+            });
+            //the data of  port1 isn't allowed to input
+            function hide(id1, id2, id3, id4, id5, id6, id7, id8, id9) {
+                document.getElementById(id1).disabled = "disabled";
+                document.getElementById(id2).disabled = "disabled";
+                document.getElementById(id3).disabled = "disabled";
+                document.getElementById(id4).disabled = "disabled";
+                document.getElementById(id5).disabled = "disabled";
+                document.getElementById(id6).disabled = "disabled";
+                document.getElementById(id7).disabled = "disabled";
+                document.getElementById(id8).disabled = "disabled";
+                document.getElementById(id9).disabled = "disabled";
+            }
+            //the data of  port1 is allowed to input
+            function show(id1, id2, id3, id4, id5, id6, id7, id8, id9) {
+                document.getElementById(id1).disabled = "";
+                document.getElementById(id2).disabled = "";
+                document.getElementById(id3).disabled = "";
+                document.getElementById(id4).disabled = "";
+                document.getElementById(id5).disabled = "";
+                document.getElementById(id6).disabled = "";
+                document.getElementById(id7).disabled = "";
+                document.getElementById(id8).disabled = "";
+                document.getElementById(id9).disabled = "";
+            }
+        </script>
+    </body>
+</html>

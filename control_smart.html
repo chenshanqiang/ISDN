@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
+        <style type="text/css">
+            img {
+                margin-right: 20px;
+            }
+            .table i {
+                margin-right: 10px;
+            }
+            i:hover {
+                cursor: pointer;
+            }
+            .tym i {
+                padding: 5px;
+                border-radius: 10px;
+            }
+            input {
+                height: 20px;
+                width: 20px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body onload="loadsmartstaus()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>智能控制</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <form class="layui-form layui-form-pane" lay-filter="form">
+            <table class="layui-table">
+                <thead>
+                    <tr style="background-color:#F0F0F0">
+                        <th style="width:26%">设备名称</th>
+                        <th style="width:28%">状态</th>
+                        <th style="width:46%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>投影机电源开关</td>
+                        <td>
+                            <span id="dy1"></span>
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" id='startOne' title="开" value="on" name="statusOne" lay-filter='statusOne' />
+                            <input type="radio" id='stopOne' title="关" value="off" name="statusOne" lay-filter='statusOne' /> </td>
+                    </tr>
+                    <tr>
+                        <td>电子锁开关</td>
+                        <td>
+                            <span id="cks"></span>
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" id='startThree' title="开" value="on" name="statusThree" lay-filter='statusThree' />
+                            <input type="radio" id='stopThree' title="关" value="off" name="statusThree" lay-filter='statusThree' /> </td>
+                    </tr>
+                    <tr>
+                        <td>内置电脑开关</td>
+                        <td>
+                            <span id="nz_computer"></span>
+                        </td>
+                        <td style="text-align: center;">
+                            <input type="radio" id='startFour' title="开" value="on" name="statusFour" lay-filter='statusFour' />
+                            <input type="radio" id='stopFour' title="关" value="off" name="statusFour" lay-filter='statusFour' /> </td>
+                    </tr>
+                    <tr>
+                        <td>投影幕</td>
+                        <td>
+                            <span id="screen"></span>
+                        </td>
+                        <td style="text-align: center;" class='tym'>
+                            <i id='up' class="fa fa-arrow-up fa-lg" aria-hidden="true"></i>
+                            <i id='down' class="fa fa-arrow-down fa-lg" aria-hidden="true"></i>
+                            <i id='pause' class="fa fa-pause fa-lg" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <table class="layui-table">
+            <thead>
+                <tr style="background-color:#F0F0F0">
+                    <th style="width:26%">串口控制</th>
+                    <th style="width:28%">状态</th>
+                    <th style="width:46%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id='projector'>
+                    <td>投影机控制
+                        <span id='projector_status'></span>
+                    </td>
+                    <td>
+                        <span id="tyj"></span>
+                    </td>
+                    <td style="text-align: center;">
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="prjdevice_on">开启投影机</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="prjdevice_off">关闭投影机</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="videoSwitch1">视频信号源1</button>
+                        <button class="layui-btn layui-btn-primary layui-btn-radius" id="videoSwitch2">视频信号源2</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form;
+                loadsmartstaus = function () {
+                    try {
+                        var result = protocal_get("smartdevice", null);
+                        /*var result = ['on','on','off','on','off'];*/
+                        var resultone = protocal_get("prout", null);
+                        var resultTwo = protocal_get("terminal_control", null);
+                        /*投影机电源是否存在*/
+                        var resultthree = protocal_get("smartdevice_pwr1", null);
+                        /*var resultthree = ['0'];*/
+                        /*电子锁是否存在*/
+                        var resultfour = protocal_get("smartdevice_lock", null);
+                        /* var resultfour = ['0'];*/
+                        /*内置电脑是否存在*/
+                        var resultfive = protocal_get("smartdevice_builcomputer", null);
+                        /*var resultfive = ['0'];*/
+                        /*投影幕是否存在*/
+                        var resultsix = protocal_get("smartdevice_prjscreen", null);
+                        /*var resultsix = ['0'];*/
+                        if(resultthree[0] == '0') {
+                            $('#startOne').prop('disabled', true);
+                            $('#stopOne').prop('disabled', true);
+                        } else {
+                            $('#startOne').remove('disabled');
+                            $('#stopOne').remove('disabled');
+                        }
+                        if(resultfour[0] == '0') {
+                            $('#startThree').prop('disabled', true);
+                            $('#stopThree').prop('disabled', true);
+                        } else {
+                            $('#startThree').remove('disabled');
+                            $('#stopThree').remove('disabled');
+                        }
+                        if(resultfive[0] == '0') {
+                            $('#startFour').prop('disabled', true);
+                            $('#stopFour').prop('disabled', true);
+                        } else {
+                            $('#startFour').remove('disabled');
+                            $('#stopFour').remove('disabled');
+                        }
+                        if(resultsix[0] == '0') {
+                            $('#up').css('cursor', 'not-allowed');
+                            $('#down').css('cursor', 'not-allowed');
+                            $('#pause').css('cursor', 'not-allowed');
+                        } else {
+                            $('#up').off('click').on('click', function () {
+                                screenall('smartdevice_prjscreen', 'up', 'screen_up', 'screen');
+                            })
+                            $('#up').off('mousedown').on('mousedown', function () {
+                                scre_mouse('up', 'down', 'pause');
+                            })
+                            $('#down').off('click').on('click', function () {
+                                screenall('smartdevice_prjscreen', 'down', 'screen_down', 'screen');
+                            })
+                            $('#down').off('mousedown').on('mousedown', function () {
+                                scre_mouse('down', 'pause', 'up');
+                            })
+                            $('#pause').off('click').on('click', function () {
+                                screenall('smartdevice_prjscreen', 'stop', 'screen_stop', 'screen');
+                            })
+                            $('#pause').off('mousedown').on('mousedown', function () {
+                                scre_mouse('pause', 'up', 'down')
+                            })
+                            $('#up').css('cursor', 'pointer');
+                            $('#down').css('cursor', 'pointer');
+                            $('#pause').css('cursor', 'pointer');
+                        }
+                        if(result.length != 5) {
+                            //throw "loadsmartstaus result count failure.";
+                        } else {
+                            form.val('form', {
+                                'statusOne': result[0],
+                                'statusThree': result[2],
+                                'statusFour': result[4]
+                            })
+                            if(result[0] == 'on') {
+                                $('#dy1').text('开');
+                            } else {
+                                $('#dy1').text('关');
+                            }
+                            if(result[2] == 'on') {
+                                $('#cks').text('开');
+                            } else {
+                                $('#cks').text('关');
+                            }
+                            if(result[3] == 'up') {
+                                $('#screen').text('升');
+                                $('#up').css('background', '#44993D');
+                                $('#down').css('background', '#FFFFFF');
+                                $('#pause').css('background', '#FFFFFF');
+                            } else if(result[3] == 'down') {
+                                $('#screen').text('降');
+                                $('#up').css('background', '#FFFFFF');
+                                $('#down').css('background', '#44993D');
+                                $('#pause').css('background', '#FFFFFF');
+                            } else {
+                                $('#screen').text('停');
+                                $('#up').css('background', '#FFFFFF');
+                                $('#down').css('background', '#FFFFFF');
+                                $('#pause').css('background', '#44993D');
+                            }
+                            if(result[4] == 'on') {
+                                $('#nz_computer').text('开');
+                            } else {
+                                $('#nz_computer').text('关');
+                            }
+                        }
+                        form.render('radio');
+                        if(resultone[0] == 0) {
+                            $('#tyj').text('请打开本机参数配置里的串口配置界面，点击启用按钮，开始使用！');
+                            $('#projector_status').text('（未打开）');
+                            $('#prjdevice_off').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#prjdevice_on').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#videoSwitch1').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#videoSwitch2').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#prjdevice_on').off('mousedown');
+                            $('#prjdevice_off').off('mousedown');
+                            $('#videoSwitch1').off('mousedown');
+                            $('#videoSwitch2').off('mousedown');
+                            $('#videoSwitch1').off('click');
+                            $('#videoSwitch2').off('click');
+                            $('#prjdevice_on').off("click");
+                            $('#prjdevice_off').off("click");
+                        } else {
+                        	$('#videoSwitch1').off('mousedown').on('mousedown', function () {
+                                mouse('videoSwitch1','videoSwitch2','prjdevice_on','prjdevice_off');
+                            });
+                        	$('#videoSwitch2').off('mousedown').on('mousedown', function () {
+                                mouse('videoSwitch2','videoSwitch1','prjdevice_on','prjdevice_off');
+                            });
+                        	$('#prjdevice_on').off('mousedown').on('mousedown', function () {
+                                mouse('prjdevice_on','videoSwitch2','videoSwitch1','prjdevice_off');
+                            });
+                            $('#prjdevice_off').off('mousedown').on('mousedown', function () {
+                                mouse('prjdevice_off','prjdevice_on','videoSwitch2','videoSwitch1');
+                            });
+                            $('#videoSwitch1').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_prjdevice', 'src1', 'video_1');
+                            });
+                            $('#videoSwitch2').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_prjdevice', 'src2', 'video_2');
+                            });
+                            $('#prjdevice_on').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_prjdevice', 'on', 'com_on');
+                            });
+                            $('#prjdevice_off').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_prjdevice', 'off', 'com_off');
+                            });
+                            document.getElementById('projector_status').innerHTML = ' ';
+                        }
+                        /*if(resultTwo[0] == 0) {
+                            $('#tyjOne').text('请打开本机参数配置里的串口配置界面，点击启用按钮，开始使用！');
+                            $('#projectorStatus').text('（未打开）');
+                            $('#prjdeviceOff').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#prjdeviceOn').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#video_Switch1').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#video_Switch2').prop('class', 'layui-btn layui-btn-disabled layui-btn-radius');
+                            $('#video_Switch1').off('mousedown');
+                            $('#video_Switch2').off('mousedown');
+                            $('#prjdeviceOn').off('mousedown');
+                            $('#prjdeviceOff').off('mousedown');
+                            $('#video_Switch1').off('click');
+                            $('#video_Switch2').off('click');
+                            $('#prjdeviceOn').off("click");
+                            $('#prjdeviceOff').off("click");
+                        } else {
+                            $('#video_Switch1').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_terminal', 'src1', 'video_1');
+                                
+                            });
+                            $('#video_Switch2').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_terminal', 'src2', 'video_2');
+                                
+                            });
+                            $('#prjdeviceOn').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_terminal', 'on', 'com_on');
+                                
+                            });
+                            $('#prjdeviceOff').off('click').on('click', function () {
+                                smartdevice_prjdevice('smartdevice_terminal', 'off', 'com_off');
+                                
+                            });
+                            document.getElementById('projectorStatus').innerHTML = ' ';
+                        }*/
+                    } catch(err) {
+                        //alert(err);
+                    }
+                }
+                form.on('radio(statusOne)', function (data) {
+                    if(data.value == 'on') {
+                        $('#dy1').text('开');
+                        power('smartdevice_pwr1', 'on', 'power1_on');
+                    } else {
+                        $('#dy1').text('关');
+                        power('smartdevice_pwr1', 'off', 'power1_off');
+                    }
+                })
+                form.on('radio(statusThree)', function (data) {
+                    if(data.value == 'on') {
+                        $('#cks').text('开');
+                        power('smartdevice_lock', 'on', 'mcl_on');
+                    } else {
+                        $('#cks').text('关');
+                        power('smartdevice_lock', 'off', 'mcl_off');
+                    }
+                })
+                form.on('radio(statusFour)', function (data) {
+                    if(data.value == 'on') {
+                        built_computer('nz_computer', '开', 'on');
+                    } else {
+                        built_computer('nz_computer', '关', 'off');
+                    }
+                })
+            });
+            setInterval(function () {
+                loadsmartstaus();
+            }, 3000)
+
+            function scre_mouse(id1, id2, id3) {
+                $('#' + id1).css('background', '#44993D');
+                $('#' + id2).css('background', '#FFFFFF');
+                $('#' + id3).css('background', '#FFFFFF');
+            }
+
+            function built_computer(id, content, status) {
+                $('#' + id).text(content)
+                try {
+                    var result = protocal_set('smartdevice_builcomputer', status);
+                    if(result[0] == 'ok') {
+                        return;
+                    } else {
+                        throw " result unkown error";
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+
+            function power(smartdevice, status, powerstatus) {
+                try {
+                    var result = protocal_set(smartdevice, status);
+                    if(result.length < 1) {
+                        throw powerstatus + " result count failure";
+                    } else {
+                        if(result[0] == 'ok') {
+                            return;
+                        } else {
+                            throw powerstatus + " result unkown error";
+                        }
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+
+            function screenall(smartdevice, status, screenstatus, id) {
+                try {
+                    var result = protocal_set(smartdevice, status);
+                    if(result.length < 1) {
+                        throw screenstatus + " result count failure";
+                    } else {
+                        if(result[0] == 'ok') {
+                            if(status == 'up') {
+                                document.getElementById(id).innerHTML = '升';
+                            } else if(status == 'down') {
+                                document.getElementById(id).innerHTML = '降';
+                            } else {
+                                document.getElementById(id).innerHTML = '停';
+                            }
+                        } else {
+                            throw screenstatus + " result unkown error";
+                        }
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+
+            function smartdevice_prjdevice(smartdevice, status, comstatus) {
+                try {
+                    var result = protocal_set(smartdevice, status);
+                    if(result.length < 1) {
+                        throw comstatus + " result count failure";
+                    } else {
+                        if(result[0] == 'ok') {
+                            return false;
+                        } else {
+                            throw comstatus + " result unkown error";
+                        }
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+
+            function mouse(id1, id2, id3, id4) {
+                $('#' + id1).attr('class', 'layui-btn layui-btn-radius');
+                $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+        </script>
+    </body>
+</html>

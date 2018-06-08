@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css"> 
+    </head>
+    <body onload="onloadmain()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>寻呼器联动</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>寻呼器登录</legend>
+        </fieldset>
+        <form class="layui-form layui-form-pane" lay-filter="form_apply_fir">
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影幕</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startOne' name="statusOne" value="on" title="打开" lay-filter='statusOne' />
+                    <input type="radio" id='stopOne' name="statusOne" value="off" title="无需操作" lay-filter='statusOne' /> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影机</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startTwo' name="statusTwo" value="on" title="打开" lay-filter='statusTwo'/>
+                    <input type="radio" id='stopTwo' name="statusTwo" value="off" title="无需操作" lay-filter='statusTwo'/> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">内置电脑</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startThree' name="statusThree" value="on" title="打开" lay-filter='statusThree'/>
+                    <input type="radio" id='stopThree' name="statusThree" value="off" title="无需操作" lay-filter='statusThree'/> </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
+                </div>
+            </div>
+        </form>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>寻呼器注销</legend>
+        </fieldset>
+        <form class="layui-form layui-form-pane" lay-filter="form_apply_sec">
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影幕</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFour' title="上升" value="on" name="statusFour">
+                    <input type="radio" id='stopFour' title="无需操作" value="off" name="statusFour"> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影机</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFive' title="关闭" value="on" name="statusFive">
+                    <input type="radio" id='stopFive' title="无需操作" value="off" name="statusFive"> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">内置电脑</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startSix' title="关闭" value="on" name="statusSix">
+                    <input type="radio" id='stopSix' title="无需操作" value="off" name="statusSix"> </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo2">提交</button>
+                </div>
+            </div>
+        </form>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.jquery;
+                    
+                onloadmain = function () {
+                    try {
+                        var result_couple_on = protocal_get("coupled_on", null);
+                        var result_couple_off = protocal_get("coupled_off", null);
+                        /*var result_couple_on = ['on', 'on', 'on', 'on', 'on', 'on', 'on'];
+                        var result_couple_off = ['on', 'off', 'on', 'off', 'on', 'off', 'on'];*/
+                        if(result_couple_on.length < 7 && result_couple_off.length < 7) {
+                            //throw "loadsmartstaus result count failure.";
+                        } else {
+                            form.val('form_apply_fir', {
+                                "statusOne": result_couple_on[2],
+                                "statusTwo": result_couple_on[3],
+                                "statusThree": result_couple_on[4]
+                            });
+                            form.val('form_apply_sec', {
+                                "statusFour": result_couple_off[2],
+                                "statusFive": result_couple_off[3],
+                                "statusSix": result_couple_off[4]
+                            });
+                        }
+                    } catch(err) {}
+                }
+                form.on('submit(demo1)', function (data) {
+                    submit_linkage_control(data.field.statusOne, data.field.statusTwo, data.field.statusThree, 'coupled_on');
+                    return false;
+                });
+                form.on('submit(demo2)', function (data) {
+                    submit_linkage_control(data.field.statusFour, data.field.statusFive, data.field.statusSix, 'coupled_off');
+                    return false;
+                });
+            });
+            /*提交按钮*/
+            function submit_linkage_control(element3, element4, element5, name) {
+                var result = 'on' + '&' + 'on' + '&' + element3 + '&' + element4 + '&' + element5 + '&' + '2' + '&' + '2';
+                try {
+                    var result = protocal_set(name, result);
+                    if(result[0] == 'ok') {
+                        layer.msg('提交成功！', {
+                            time: 3000,
+                            icon: 1,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    } else {
+                        layer.msg('提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    }
+                } catch(err) {
+                    alert(err);
+                }
+            }
+        </script>
+    </body>
+</html>

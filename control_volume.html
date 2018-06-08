@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="./css/slider.css">
+        <link rel="stylesheet" type="text/css" href="./css/table.css"> </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>音量控制</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <div class="layui-form">
+            <table class="layui-table">
+                <thead>
+                    <tr style="background-color:#F0F0F0">
+                        <th style="width:32%">名称</th>
+                        <th style="width:34%">音量调控</th>
+                        <th style="width:33%">音量值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>主音量</td>
+                        <td>
+                            <input id="range1" type="range" min="0" max="100" value="0" onchange="volchanged('range1','value1','main_vol')"> </td>
+                        <td>
+                            <span id="value1">0</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use('element', function () {});
+            var onLoadVol = function () {
+                try {
+                    var result = protocal_get("vol", null);
+                    if(result.length != 2) {
+                        //throw " vol count error";
+                    } else {
+                        $('#range1').val(result[0]);
+                        //$('#range2').val(result[1]);
+                        $('#value1').text(result[0]);
+                        //$('#value2').text(result[1]);
+                    }
+                } catch(err) {
+                    //alert(err);
+                }
+            }
+            onLoadVol();
+            setInterval(function () {
+                onLoadVol();
+            }, 2500)
+
+            function volchanged(id1, id2, name) {
+                var vol = $('#' + id1).val();
+                $('#' + id2).text(vol);
+                try {
+                    var result = protocal_set(name, vol);
+                    if('ok' == result[0]) {
+                        return false;
+                    } else {
+                        //throw name+" result failure"; 
+                    }
+                } catch(err) {
+                    //alert(err);
+                }
+            }
+        </script>
+    </body>
+</html>

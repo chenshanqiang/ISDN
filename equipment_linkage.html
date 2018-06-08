@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css">
+    </head>
+    <body onload="onloadmain()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>设备启用禁用</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <form class="layui-form layui-form-pane" lay-filter="form_apply" style="margin-top:20px;">
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影机</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startOne' value="on" title="启用" name="statusOne" lay-filter='statusOne'>
+                    <input type="radio" id='stopOne' value="off" title="禁用" name="statusOne" lay-filter='statusOne'> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影幕</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startTwo' value="on" title="启用" name="statusTwo" lay-filter='statusTwo' />
+                    <input type="radio" id='stopTwo' value="off" title="禁用" name="statusTwo" lay-filter='statusTwo' /></div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">电子锁</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startThree' value="on" title="启用" name="statusThree" lay-filter='statusThree' />
+                    <input type="radio" id='stopThree' value="off" title="禁用" name="statusThree" lay-filter='statusThree' /></div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">内置电脑</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFour' value="on" title="启用" name="statusFour" lay-filter='statusFour' />
+                    <input type="radio" id='stopFour' value="off" title="禁用" name="statusFour" lay-filter='statusFour' /></div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">空调1</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFive' value="on" title="启用" name="statusFive" lay-filter='statusFive' />
+                    <input type="radio" id='stopFive' value="off" title="禁用" name="statusFive" lay-filter='statusFive' /></div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">空调2</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startSix' value="on" title="启用" name="statusSix" lay-filter='statusSix' />
+                    <input type="radio" id='stopSix' value="off" title="禁用" name="statusSix" lay-filter='statusSix' /></div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline"> 
+                    <label class="layui-form-label" style="width: 130px!important;">投影幕上升时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="TimeOne" id='TimeOne' onkeyup="checkTimeOne('TimeOne')" autocomplete="off" class="layui-input"> </div>
+                    <div class="layui-form-mid layui-word">秒</div>
+                    <div class="layui-form-mid layui-word-aux">注：输入范围为0-60；</div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label" style="width: 130px!important;">投影幕下降时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="TimeTwo" id='TimeTwo' onkeyup="checkTimeOne('TimeTwo')" autocomplete="off" class="layui-input">
+                        <font></font>
+                    </div>
+                    <div class="layui-form-mid layui-word">秒</div>
+                    <div class="layui-form-mid layui-word-aux">注：输入范围为0-60；</div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 130px!important;">
+                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
+                </div>
+            </div>
+        </form>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'layer', 'form'], function () {
+                var layer = layui.layer,
+                    form = layui.form,
+                    $ = layui.jquery;
+                onloadmain = function () {
+                    try {
+                        var result = protocal_get("linkage", null);
+                        /*var result = ['on','off','on','off','on','off','on','off','on','off','on','off','on','off']*/
+                        
+                        if(result.length < 10) {
+                            //throw "loadsmartstaus result count failure.";
+                        } else {
+                            form.val('form_apply', {
+                                "statusOne": result[0],
+                                "statusTwo": result[1],
+                                "statusThree": result[2],
+                                "statusFour": result[3],
+                                "statusFive": result[4],
+                                "statusSix": result[5],
+                                "TimeOne": result[12],
+                                "TimeTwo": result[13]
+                            })
+                        }
+                    } catch(err) {}
+                }
+                //监听提交
+                form.on('submit(demo1)', function (data) {
+                        if(data.field.TimeOne == '' || data.field.TimeTwo == '') {
+                            layer.msg('有数据为空，提交失败！', {
+                                time: 3000,
+                                icon: 2,
+                                anim: 0,
+                                skin: 'message',
+                                shade: [0.5, '#393D49']
+                            });
+                        } else {
+                            var value = '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + data.field.TimeOne + '&' + data.field.TimeTwo + '&' + '1' + '&' + '1';
+                            var result = protocal_set('project_work', value);
+                            if(result[0] == 'ok') {
+                                layer.msg('提交成功！', {
+                                    time: 3000,
+                                    icon: 1,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            } else {
+                                layer.msg('提交失败！', {
+                                    time: 3000,
+                                    icon: 2,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            }
+                        }
+                    return false;
+                });
+                form.on('radio(statusOne)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('project', 'on');
+                    } else {
+                        switchbutton('project', 'off');
+                    }
+                })
+                form.on('radio(statusTwo)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('projectee', 'on');
+                    } else {
+                        switchbutton('projectee', 'off');
+                    }
+                })
+                form.on('radio(statusThree)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('lock', 'on');
+                    } else {
+                        switchbutton('lock', 'off');
+                    }
+                })
+                form.on('radio(statusFour)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('computer', 'on');
+                    } else {
+                        switchbutton('computer', 'off');
+                    }
+                })
+                form.on('radio(statusFive)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('air_one', 'on');
+                    } else {
+                        switchbutton('air_one', 'off');
+                    }
+                })
+                form.on('radio(statusSix)', function (data) {
+                    if(data.value == 'on') {
+                        switchbutton('air_two', 'on');
+                    } else {
+                        switchbutton('air_two', 'off');
+                    }
+                })
+            });
+
+            function switchbutton(name, value) {
+                try {
+                    var result = protocal_set(name, value);
+                    if(result[0] == 'ok') {} else {
+                        layer.msg('提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                        });
+                    }
+                } catch(err) {}
+            }
+            /*验证升降时间输入值*/
+            function checkTimeOne(param1) {
+                var regTwotime = /(^[0-9]$)|(^[1-5][0-9]$)|(^60$)/;
+                var timeTwo = document.getElementById(param1).value;
+                if(regTwotime.test(timeTwo) || timeTwo == '') {} else {
+                    document.getElementById(param1).value = '';
+                }
+            }
+        </script>
+    </body>
+</html>

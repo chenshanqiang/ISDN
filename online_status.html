@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" href="./css/main.css"> </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>在线状态</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <div class="layui-form">
+            <table class="layui-table">
+                <thead>
+                    <tr style="background-color:#F0F0F0">
+                        <th style="width:50%">名称</th>
+                        <th style="width:50%">状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>功放板</td>
+                        <td id="statusone"> </td>
+                    </tr>
+                    <tr>
+                        <td>寻呼器</td>
+                        <td id="statustwo"> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'jquery'], function () {
+                var element = layui.element,
+                    $ = layui.jquery;
+                try {
+                    var result = protocal_get('status', null);
+                    if(result.length < 2) {
+                        return;
+                    }
+                    switch(result[0]) {
+                        case '0':
+                            $('#statusone').text('未连接');
+                            $('#statusone').css('color', 'red');
+                            break;
+                        case '1':
+                            $('#statusone').text('已连接');
+                            $('#statusone').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
+                            break;
+                    }
+                    switch(result[1]) {
+                        case '0':
+                            $('#statustwo').text('未连接');
+                            $('#statustwo').css('color', 'red');
+                            break;
+                        case '1':
+                            $('#statustwo').text('已连接');
+                            $('#statustwo').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
+                            break;
+                    }
+                } catch(err) {}
+            })
+        </script>
+    </body>
+</html>

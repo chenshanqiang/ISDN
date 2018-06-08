@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>音视频一线通终端管理设置</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <style type="text/css">
+            input {
+                width: 250px!important;
+            }
+            .layui-word-aux {
+                margin-left: 60px;
+            }
+        </style>
+    </head>
+    <body onload="onloadmain()">
+        <div class="x-nav">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a>
+                    <cite>首页</cite>
+                </a>
+                <a>
+                    <cite>管理员</cite>
+                </a>
+                <a>
+                    <cite>录播控制</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-sm" style="float: right;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon layui-icon-refresh"></i>
+            </a>
+        </div>
+        <form class="layui-form layui-form-pane">
+            <div class="layui-form-item" style="margin-top: 20px;">
+                <label class="layui-form-label" style="width: 160px!important;">PPT侦测时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="ppt_detect_time" name="title1" autocomplete="off" onkeyup="check_time('ppt_detect_time')" placeholder="PPT侦测时间" class="layui-input"> </div>
+                <div class="layui-form-mid layui-word-aux">注：输入范围1～99,单位为秒；</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 160px!important;">PPT侦测灵敏度</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="ppt_detect_sensitive" name="title2" autocomplete="off" placeholder="PPT侦测灵敏度" onkeyup="check_sensitivity('ppt_detect_sensitive')" class="layui-input"> </div>
+                <div class="layui-form-mid layui-word-aux">注：输入范围为1～5,且灵敏度依次递减；</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 160px!important;">教师摄像头侦测时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="tc_dectect_time" name="title3" autocomplete="off" placeholder="教师摄像头侦测时间" onkeyup="check_time('tc_dectect_time')" class="layui-input"> </div>
+                <div class="layui-form-mid layui-word-aux">注：输入范围1～99,单位为秒；</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 160px!important;">学生摄像头侦测时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="sd_dectect_time" name="title4" autocomplete="off" placeholder="学生摄像头侦测时间" onkeyup="check_time('sd_dectect_time')" class="layui-input"> </div>
+                <div class="layui-form-mid layui-word-aux">注：输入范围1～99,单位为秒；</div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 160px!important;">
+                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
+                </div>
+            </div>
+        </form>
+        <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="./js/protocal.js"></script>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./layui/layui.js"></script>
+        <script type="text/javascript">
+            layui.use(['element', 'form', 'layer'], function () {
+                var layer = layui.layer,
+               	 	form = layui.form;
+                form.on('submit(demo1)', function (data) {
+                	console.log(data.field.title1)
+                	var result = data.field.title1 + '&' + data.field.title2 + '&' + data.field.title3 + '&' + data.field.title4;
+                	if(data.field.title1 != '' && data.field.title2 != '' && data.field.title3 != '' && data.field.title4 != '') {
+                        try {
+                            var result = protocal_set('recordcmd', result);
+                            if(result[0] == 'ok') {
+                                layer.msg('提交成功！', {
+                                    time: 3000,
+                                    icon: 1,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            } else {
+                                layer.msg('提交失败！', {
+                                    time: 3000,
+                                    icon: 2,
+                                    anim: 0,
+                                    skin: 'message',
+                                    shade: [0.5, '#393D49']
+                                });
+                            }
+                        } catch(err) {
+                            //alert(err);
+                        }
+                    } else {
+                        layer.msg('数据不能为空，提交失败！', {
+                            time: 3000,
+                            icon: 2,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    }
+                	return false;
+                })
+                
+            });
+			function onloadmain() {
+                try {
+                    var resultone = protocal_get('recordcmd', null);
+                    if(resultone.length < 4) {
+                        //throw "servernet result count failure";
+                    } else {
+                    	$('#ppt_detect_time').val(resultone[0]);
+                    	$('#ppt_detect_sensitive').val(resultone[1]);
+                    	$('#tc_dectect_time').val(resultone[2]);
+                    	$('#sd_dectect_time').val(resultone[3])
+                    }
+                } catch(err) {
+                    //alert(err);
+                }
+            }
+            function check_time(id) {
+                var str = $('#'+id).val();
+                var reg = /(^[1-9][0-9]$)|(^[1-9]$)/;
+                if(!reg.test(str)) {
+                	$('#'+id).val("");
+                } else {}
+            }
+
+            function check_sensitivity(id, id1) {
+                var str = $('#'+id).val();
+                var reg = /(^[1-5]$)/;
+                if(!reg.test(str)) {
+                	$('#'+id).val("");
+                } else {
+                	$('#'+id1).css('display','none');
+                }
+            }
+        </script>
+    </body>
+</html>
