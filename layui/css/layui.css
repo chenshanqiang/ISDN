@@ -1359,6 +1359,10 @@ a cite {
 	color: #999!important;
 	padding: 0 5px!important
 }
+.layui-word-aux-red {
+	color: red!important;
+	padding: 0 5px!important
+}
 .layui-btn {
 	display: inline-block;
 	height: 38px;

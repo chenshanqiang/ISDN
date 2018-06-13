@@ -126,44 +126,46 @@
         <fieldset class="layui-elem-field layui-field-box" style="margin-top: 20px;">
             <legend>其他参数设置</legend>
             <!--空调1其他参数设置-->
-            <div class="layui-form air_conditioning_one_otherParseset">
+            <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="min-width: 100px;">空调地址设置</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" id="set_air_one_conditioning" onkeyup="airConditioninglocation('#set_air_one_conditioning')"> </div>
+                            <input type="text" class="layui-input" name="address" id="set_air_one_conditioning" lay-verify="inputnum"> </div>
                         <div class="layui-form-mid layui-word-aux">（地址支持：1或2）</div>
                         <div class="layui-form-mid layui-word" id='initial_status_conditioning_adress_one' style='color:red;'></div>
                     </div>
                     <div class="layui-inline">
                         <div class="layui-input-block">
-                            <button class="layui-btn layui-btn-normal" id="buttonsubmitfirst" onclick="setparseone('#buttonsubmitfirst','#set_air_one_conditioning')">提交</button>
+                        	<button class="layui-btn layui-btn-normal" id="buttonsubmitfirst"  lay-submit="" lay-filter="demo1" >提交</button>
                         </div>
                     </div>
                 </div>
-                <hr />
+                <hr /> 
+            </form>
+            <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="min-width: 225px;white-space:nowrap;">关机状态判定条件：工作电流小于</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" style="display: inline-block!important;" id="air_conditioning_one_working_current_two" onkeyup="worElecur('#air_conditioning_one_working_current_two')"> </div>
+                            <input type="text" class="layui-input" name="workingCurrent"  lay-verify="inputnumone" id="air_conditioning_one_working_current_two"> </div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-1）</div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label" style="white-space:nowrap;">功率小于</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" style="display: inline-block!important;" id="air_conditioning_one_rate_power" onkeyup="power('#air_conditioning_one_rate_power')"> </div>
+                            <input type="text" class="layui-input" name="ratePower"  lay-verify="inputnumtwo" id="air_conditioning_one_rate_power"> </div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-30）</div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <div class="layui-input-block">
-                            <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond" onclick="setparsettwo('#air_conditioning_one_working_current_two','#air_conditioning_one_rate_power','#buttonsubmitsecond','air_one_config')">提交</button>
+                            <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond"  lay-submit="" lay-filter="demo2">提交</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </fieldset>
         <script type="text/javascript" src="./layui/layui.js"></script>
         <script type="text/javascript" src="./js/protocal.js"></script>
@@ -178,6 +180,80 @@
                 layer = layui.layer,
                     form = layui.form,
                     $ = layui.jquery;
+
+                   /*提交按钮1*/
+                form.on('submit(demo1)', function (data) {
+                		var name = $('#buttonsubmitfirst').attr('name'),
+                        result = protocal_set(name, data.field.address);
+                        if(result[0] == 'ok') {
+                            layer.msg('提交成功', {
+                            icon: 6,
+                            shade: [0.5, '#393D49']
+                        });
+                        } else {
+                            layer.msg('提交失败', {
+                            icon: 5,
+                            shade: [0.5, '#393D49']
+                        });
+                        }
+                    return false;
+                });    
+
+                form.verify({
+                    inputnum: function (value) {
+                    	if(!value) {
+                            return '输入不能为空！';
+                        }
+                    	if(isNaN(value)) {
+                            return '输入有误！';
+                        }
+                        if(value!=1&&value!=2) {
+                            return '输入有误！';
+                        }
+                    },
+                    inputnumone:function(value){
+                    	if(!value) {
+                            return '输入不能为空！';
+                        }
+                    	if(isNaN(value)) {
+                            return '输入有误！';
+                        }
+                        if(value<0||value>1) {
+                            return '输入有误！';
+                        }
+                    },
+                    inputnumtwo:function(value){
+                    	if(!value) {
+                            return '输入不能为空！';
+                        }
+                    	if(isNaN(value)) {
+                            return '输入有误！';
+                        }
+                        if(value<0||value>30) {
+                            return '输入有误！';
+                        }
+                    }
+                });   
+                    /**/
+                form.on('submit(demo2)', function (data) {
+                		var name = $('#buttonsubmitsecond').attr('name'),
+                		value = data.field.workingCurrent+"&"+ data.field.ratePower,
+                		result = protocal_set(name, value);
+                        if(result[0] == 'ok') {
+                            layer.msg('提交成功', {
+                            icon: 6,
+                            shade: [0.5, '#393D49']
+                        });
+                        } else {
+                            layer.msg('提交失败', {
+                            icon: 5,
+                            shade: [0.5, '#393D49']
+                        });
+                        }
+                    return false;
+                });    
+                    
+                    
                 //初始值的获取
                 onloadmainone = function () {
                     try {
@@ -664,24 +740,9 @@
                     $(id).attr('class', 'layui-btn layui-btn-normal')
                 }
             }
-            /*数据验证*/
-            function airConditioninglocation(id) {
-                if($(id).val() != 1 && $(id).val() != 2) {
-                    $(id).val('');
-                } else {}
-            }
-            /*验证工作电流输入值*/
-            function worElecur(id) {
-                if($(id).val() >= 0 && $(id).val() <= 1) {} else {
-                    $(id).val('');
-                }
-            }
-            /*验证功率输入值*/
-            function power(id) {
-                if($(id).val() >= 0 && $(id).val() <= 30) {} else {
-                    $(id).val('');
-                }
-            }
+            
+            
+            
 
             function buttonname(id, value) {
                 $('#' + id).attr('name', value);
@@ -699,48 +760,6 @@
                         return false;
                     } else {
                         //throw name+" result failure"; 
-                    }
-                } catch(err) {}
-            }
-
-            function setparseone(id1, id2) {
-                try {
-                    var name, address;
-                    name = $(id1).attr('name');
-                    address = $(id2).val();
-                    var result = protocal_set(name, address);
-                    if(result[0] == 'ok') {
-                        layer.msg('提交成功', {
-                            icon: 6,
-                            shade: [0.5, '#393D49']
-                        });
-                    } else {
-                        layer.msg('提交失败', {
-                            icon: 5,
-                            shade: [0.5, '#393D49']
-                        });
-                    }
-                } catch(err) {}
-            }
-
-            function setparsettwo(id1, id2, id3, name) {
-                try {
-                    var value1 = $(id1).val(),
-                        value2 = $(id2).val(),
-                        value = value1 + "&" + value2,
-                        name = $(id3).attr('name');
-                    var result = protocal_set(name, value);
-                    if(result[0] == 'ok') {
-                        layer.msg('提交成功', {
-                            icon: 6,
-                            shade: [0.5, '#393D49']
-                        });
-                        return false;
-                    } else {
-                        layer.msg('提交失败', {
-                            icon: 5,
-                            shade: [0.5, '#393D49']
-                        });
                     }
                 } catch(err) {}
             }
