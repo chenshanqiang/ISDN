@@ -2,9 +2,9 @@ document.onkeypress = forbidBackSpace;
 document.onkeydown = forbidBackSpace;
 
 function forbidBackSpace( e ) {
-	var ev = e || window.event; //获取event对象 
-	var obj = ev.target || ev.srcElement; //获取事件源 
-	var t = obj.type || obj.getAttribute( 'type' ); //获取事件源类型 
+	var ev = e || window.event;
+	var obj = ev.target || ev.srcElement;
+	var t = obj.type || obj.getAttribute( 'type' );
 	var vReadOnly = obj.readOnly;
 	var vDisabled = obj.disabled;
 	vReadOnly = ( vReadOnly == undefined ) ? false : vReadOnly;
