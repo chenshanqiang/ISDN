@@ -216,6 +216,10 @@
                     }
                 });
             });
+            
+            function jumpmain(){
+            	location.href = './index.html';
+            }
             $('#exit').off('click').on('click', function () {
                 location.href = './index.html';
                 setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
