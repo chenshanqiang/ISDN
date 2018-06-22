@@ -9,7 +9,6 @@ var security = function(){
 	}
 }
 security();
-
 function getCookiename( cname ) {
 	var name = cname + "=";
 	var ca = document.cookie.split( ';' );
