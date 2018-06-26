@@ -76,6 +76,20 @@
                             setCookie("username", 'userdsppa', "pass", 'pwddsppa', "usernameone", username, "passone", pass)
                             if(username == "dsppa" && pass == "dsppa") {
                                 location.href = './main.html';
+                            } else if(username == "dsppa" && pass != "dsppa") {
+                                layer.msg('用户名或密码输入信息有错误！', {
+                                    time: 2000,
+                                    icon: 2,
+                                    anim: 6,
+                                    skin: 'message'
+                                });
+                            } else if(username != "dsppa" && pass == "dsppa") {
+                                layer.msg('用户名或密码输入信息有错误！', {
+                                    time: 2000,
+                                    icon: 2,
+                                    anim: 6,
+                                    skin: 'message'
+                                });
                             } else {
                                 var result = protocal_login(userNameOne, pass);
                                 if('ok' == result[0]) {

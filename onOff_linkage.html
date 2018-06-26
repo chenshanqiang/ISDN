@@ -238,14 +238,14 @@
                                 "statusFour": result_couple_off[0],
                                 "statusFive": result_couple_off[1],
                                 "statusSix": result_couple_off[2],
-                                "curtainlogout": result_couple_on[3],
-                                "lamplightlogout": result_couple_on[4],
-                                "airConditionerOneLogoutControl": result_couple_on[5],
-                                "airConditionerOneLogout": result_couple_on[6],
-                                "airConditionerOneLogoutTemper": result_couple_on[7],
-                                "airConditionerTwoLogoutControl": result_couple_on[8],
-                                "airConditionerTwoLogout": result_couple_on[9],
-                                "airConditionerTwoLogoutTemper": result_couple_on[10]
+                                "curtainlogout": result_couple_off[3],
+                                "lamplightlogout": result_couple_off[4],
+                                "airConditionerOneLogoutControl": result_couple_off[5],
+                                "airConditionerOneLogout": result_couple_off[6],
+                                "airConditionerOneLogoutTemper": result_couple_off[7],
+                                "airConditionerTwoLogoutControl": result_couple_off[8],
+                                "airConditionerTwoLogout": result_couple_off[9],
+                                "airConditionerTwoLogoutTemper": result_couple_off[10]
                             });
                         }
                     } catch(err) {}
@@ -278,7 +278,7 @@
             });
             /*提交按钮*/
             function submit_linkage_control(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, name) {
-                var result = param1 + '&' + param2 + '&' + param3 + '&' + param4 + '&' + param5 + '&' + param6 + '&' + param7 + '&' + param8 + '&' + param9 + param10 + '&' + param11;
+                var result = param1 + '&' + param2 + '&' + param3 + '&' + param4 + '&' + param5 + '&' + param6 + '&' + param7 + '&' + param8 + '&' + param9 + '&' + param10 + '&' + param11;
                 try {
                     var result = protocal_set(name, result);
                     if(result[0] == 'ok') {
