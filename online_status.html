@@ -4,8 +4,7 @@
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
         <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
-        <link rel="stylesheet" href="./css/main.css"> 
-    </head>
+        <link rel="stylesheet" href="./css/main.css"> </head>
     <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
@@ -49,33 +48,41 @@
             layui.use(['element', 'jquery'], function () {
                 var element = layui.element,
                     $ = layui.jquery;
-                try {
-                    var result = protocal_get('status', null);
-                    if(result.length < 2) {
-                        return;
-                    }
-                    switch(result[0]) {
-                        case '0':
-                            $('#statusone').text('未连接');
-                            $('#statusone').css('color', 'red');
-                            break;
-                        case '1':
-                            $('#statusone').text('已连接');
-                            $('#statusone').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
-                            break;
-                    }
-                    switch(result[1]) {
-                        case '0':
-                            $('#statustwo').text('未连接');
-                            $('#statustwo').css('color', 'red');
-                            break;
-                        case '1':
-                            $('#statustwo').text('已连接');
-                            $('#statustwo').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
-                            break;
-                    }
-                } catch(err) {}
+                onloadmain = function () {
+                    try {
+                        var result = protocal_get('status', null);
+                        if(result.length < 2) {
+                            return;
+                        }
+                        switch(result[0]) {
+                            case '0':
+                                $('#statusone').text('未连接');
+                                $('#statusone').css('color', 'red');
+                                break;
+                            case '1':
+                                $('#statusone').text('已连接');
+                                $('#statusone').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
+                                break;
+                        }
+                        switch(result[1]) {
+                            case '0':
+                                $('#statustwo').text('未连接');
+                                $('#statustwo').css('color', 'red');
+                                break;
+                            case '1':
+                                $('#statustwo').text('已连接');
+                                $('#statustwo').css({ 'color': 'darkgreen', 'font-weight': 'bold' });
+                                break;
+                        }
+                    } catch(err) {}
+                }
+                onloadmain();
+                
             })
+            
+            setInterval(function(){
+            	onloadmain();
+            },600)
         </script>
     </body>
 </html>
