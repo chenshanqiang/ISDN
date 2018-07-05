@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <style type="text/css">
             #f_ord11, #f_ord21, #f_ord31, #f_ord41 {
@@ -12,7 +15,7 @@
             }
         </style>
     </head>
-    <body onload="onloadmain()">
+    <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
                 <a>
@@ -29,7 +32,7 @@
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
-        <form class="layui-form layui-form-pane" style="padding-top:20px;">
+        <form class="layui-form layui-form-pane" style="padding-top:20px;" lay-filter="example">
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">投影机控制</label>
                 <div class="layui-input-block">
@@ -125,35 +128,29 @@
             layui.use(['element', 'layer', 'form'], function () {
                 var layer = layui.layer,
                     form = layui.form;
-                onloadmain = function () {
-                    try {
-                        var resultone = protocal_get('COM1', null);
-                        /*var resultone = ['off', '4800', '1', '5', 'None', 'None', '01,', '01,', '01,', '01,'];*/
-                        if(resultone.length < 10) {
-                            //throw "COM1 result count failure";
-                        } else {
-                            $('#selc1').val(resultone[1]);
-                            $('#selc2').val(resultone[2]);
-                            $('#selc3').val(resultone[3]);
-                            $('#selc4').val(resultone[4]);
-                            $('#selc5').val(resultone[5]);
-                            $('#f_ord1').val(resultone[6]);
-                            $('#f_ord2').val(resultone[7]);
-                            $('#f_ord3').val(resultone[8]);
-                            $('#f_ord4').val(resultone[9]);
-                            if(resultone[0] == 'on') {
-                                $('#fstart').prop('checked', ' ');
-                                show('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
-                            } else {
-                                $('#fstop').prop('checked', ' ');
-                                hide('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
-                            }
-                        }
-                        form.render();
-                    } catch(err) {}
+                var resultone = protocal_get('COM1', null);
+                var resultone = ['off', '19200', '2', '8', 'Even', 'CTS', '01,05,03,', '01,05,03,', '01,03,04,', '08,03,04,'];
+                form.val('example', {
+                    'fstatus': resultone[0],
+                    'tablename1': resultone[1],
+                    'tablename2': resultone[2],
+                    'tablename3': resultone[3],
+                    'tablename4': resultone[4],
+                    'tablename5': resultone[5],
+                    "title1": resultone[6],
+                    "title2": resultone[7],
+                    "title3": resultone[8],
+                    "title4": resultone[9]
+                })
+                /*form.render();*/
+                if(resultone[0] == 'on') {
+                    show('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
+                } else {
+                    hide('selc1', 'selc2', 'selc3', 'selc4', 'selc5', 'f_ord1', 'f_ord2', 'f_ord3', 'f_ord4');
                 }
+                form.render();
                 check_order = function (id, id1) {
-                	var str = $('#'+id).val(),
+                    var str = $('#' + id).val(),
                         reg = /^([0-9a-fA-F][0-9a-fA-F][,]){0,}$/;
                     if(reg.test(str) || str == '') {
                         $('#' + id1).css('display', 'none');
@@ -219,13 +216,7 @@
                         });
                     }
                     return false;
-                });
-                $("#sstart").click(function () {
-                    show('selcc1', 'selcc2', 'selcc3', 'selcc4', 'selcc5', 's_ord1', 's_ord2', 's_ord3', 's_ord4');　　　　
-                });
-                $("#sstop").click(function () {
-                    hide('selcc1', 'selcc2', 'selcc3', 'selcc4', 'selcc5', 's_ord1', 's_ord2', 's_ord3', 's_ord4');　　　　
-                });
+                })
             });
             //the data of  port1 isn't allowed to input
             function hide(id1, id2, id3, id4, id5, id6, id7, id8, id9) {

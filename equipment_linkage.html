@@ -3,10 +3,13 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css"> </head>
-    <body onload="onloadmain()">
+    <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
                 <a>
@@ -34,36 +37,31 @@
                 <label class="layui-form-label">投影幕</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startTwo' value="on" title="启用" name="statusTwo" lay-filter='statusTwo' />
-                    <input type="radio" id='stopTwo' value="off" title="禁用" name="statusTwo" lay-filter='statusTwo' />
-                </div>
+                    <input type="radio" id='stopTwo' value="off" title="禁用" name="statusTwo" lay-filter='statusTwo' /> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">电子锁</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startThree' value="on" title="启用" name="statusThree" lay-filter='statusThree' />
-                    <input type="radio" id='stopThree' value="off" title="禁用" name="statusThree" lay-filter='statusThree' />
-                </div>
+                    <input type="radio" id='stopThree' value="off" title="禁用" name="statusThree" lay-filter='statusThree' /> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">内置电脑</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startFour' value="on" title="启用" name="statusFour" lay-filter='statusFour' />
-                    <input type="radio" id='stopFour' value="off" title="禁用" name="statusFour" lay-filter='statusFour' />
-                </div>
+                    <input type="radio" id='stopFour' value="off" title="禁用" name="statusFour" lay-filter='statusFour' /> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调1</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startFive' value="on" title="启用" name="statusFive" lay-filter='statusFive' />
-                    <input type="radio" id='stopFive' value="off" title="禁用" name="statusFive" lay-filter='statusFive' />
-                </div>
+                    <input type="radio" id='stopFive' value="off" title="禁用" name="statusFive" lay-filter='statusFive' /> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调2</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startSix' value="on" title="启用" name="statusSix" lay-filter='statusSix' />
-                    <input type="radio" id='stopSix' value="off" title="禁用" name="statusSix" lay-filter='statusSix' />
-                </div>
+                    <input type="radio" id='stopSix' value="off" title="禁用" name="statusSix" lay-filter='statusSix' /> </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -84,7 +82,6 @@
             <div class="layui-form-item">
                 <div class="layui-input-block" style="margin-left: 130px!important;">
                     <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
-                    
                 </div>
                 <div class="layui-form-mid layui-word-aux" style="margin-left: 40px;">注：设置时间只与寻呼器投影幕操作有关；</div>
             </div>
@@ -99,26 +96,24 @@
                 var layer = layui.layer,
                     form = layui.form,
                     $ = layui.jquery;
-                onloadmain = function () {
-                    try {
-                        var result = protocal_get("linkage", null);
-                        /*var result = ['on','off','on','off','on','off','on','off','on','off','on','off','on','off']*/
-                        if(result.length < 10) {
-                            //throw "loadsmartstaus result count failure.";
-                        } else {
-                            form.val('form_apply', {
-                                "statusOne": result[0],
-                                "statusTwo": result[1],
-                                "statusThree": result[2],
-                                "statusFour": result[3],
-                                "statusFive": result[4],
-                                "statusSix": result[5],
-                                "TimeOne": result[12],
-                                "TimeTwo": result[13]
-                            })
-                        }
-                    } catch(err) {}
-                }
+                try {
+                    var result = protocal_get("linkage", null);
+                    /*var result = ['on','off','on','off','on','off','on','off','on','off','on','off','on','off'];*/
+                    if(result.length < 10) {
+                        //throw "loadsmartstaus result count failure.";
+                    } else {
+                        form.val('form_apply', {
+                            "statusOne": result[0],
+                            "statusTwo": result[1],
+                            "statusThree": result[2],
+                            "statusFour": result[3],
+                            "statusFive": result[4],
+                            "statusSix": result[5],
+                            "TimeOne": result[12],
+                            "TimeTwo": result[13]
+                        })
+                    }
+                } catch(err) {}
                 form.verify({
                     inputnum: function (value) {
                         var reg = /(^[0-9]$)|(^[1-5][0-9]$)|(^60$)/;

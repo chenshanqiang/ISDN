@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
         <style type="text/css">
@@ -137,31 +140,30 @@
                     </div>
                     <div class="layui-inline">
                         <div class="layui-input-block">
-                        	<button class="layui-btn layui-btn-normal" id="buttonsubmitfirst"  lay-submit="" lay-filter="demo1" >提交</button>
+                            <button class="layui-btn layui-btn-normal" id="buttonsubmitfirst" lay-submit="" lay-filter="demo1">提交</button>
                         </div>
                     </div>
                 </div>
-                <hr /> 
-            </form>
+                <hr /> </form>
             <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="min-width: 225px;white-space:nowrap;">关机状态判定条件：工作电流小于</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" name="workingCurrent"  lay-verify="inputnumone" id="air_conditioning_one_working_current_two"> </div>
+                            <input type="text" class="layui-input" name="workingCurrent" lay-verify="inputnumone" id="air_conditioning_one_working_current_two"> </div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-1）</div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label" style="white-space:nowrap;">功率小于</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" name="ratePower"  lay-verify="inputnumtwo" id="air_conditioning_one_rate_power"> </div>
+                            <input type="text" class="layui-input" name="ratePower" lay-verify="inputnumtwo" id="air_conditioning_one_rate_power"> </div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-30）</div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <div class="layui-input-block">
-                            <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond"  lay-submit="" lay-filter="demo2">提交</button>
+                            <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond" lay-submit="" lay-filter="demo2">提交</button>
                         </div>
                     </div>
                 </div>
@@ -180,80 +182,76 @@
                 layer = layui.layer,
                     form = layui.form,
                     $ = layui.jquery;
-
-                   /*提交按钮1*/
+                /*提交按钮1*/
                 form.on('submit(demo1)', function (data) {
-                		var name = $('#buttonsubmitfirst').attr('name'),
+                    var name = $('#buttonsubmitfirst').attr('name'),
                         result = protocal_set(name, data.field.address);
-                        if(result[0] == 'ok') {
-                            layer.msg('提交成功', {
+                    if(result[0] == 'ok') {
+                        layer.msg('提交成功', {
                             icon: 6,
                             shade: [0.5, '#393D49']
                         });
-                        } else {
-                            layer.msg('提交失败', {
+                    } else {
+                        layer.msg('提交失败', {
                             icon: 5,
                             shade: [0.5, '#393D49']
                         });
-                        }
+                    }
                     return false;
-                });    
-
+                });
                 form.verify({
                     inputnum: function (value) {
-                    	if(!value) {
+                        if(!value) {
                             return '输入不能为空！';
                         }
-                    	if(isNaN(value)) {
+                        if(isNaN(value)) {
                             return '输入有误！';
                         }
-                        if(value!=1&&value!=2) {
+                        if(value != 1 && value != 2) {
                             return '输入有误！';
                         }
                     },
-                    inputnumone:function(value){
-                    	if(!value) {
+                    inputnumone: function (value) {
+                        if(!value) {
                             return '输入不能为空！';
                         }
-                    	if(isNaN(value)) {
+                        if(isNaN(value)) {
                             return '输入有误！';
                         }
-                        if(value<0||value>1) {
+                        if(value < 0 || value > 1) {
                             return '输入有误！';
                         }
                     },
-                    inputnumtwo:function(value){
-                    	if(!value) {
+                    inputnumtwo: function (value) {
+                        if(!value) {
                             return '输入不能为空！';
                         }
-                    	if(isNaN(value)) {
+                        if(isNaN(value)) {
                             return '输入有误！';
                         }
-                        if(value<0||value>30) {
+                        if(value < 0 || value > 30) {
                             return '输入有误！';
                         }
                     }
-                });   
-                    /**/
+                });
+                /**/
                 form.on('submit(demo2)', function (data) {
-                		var name = $('#buttonsubmitsecond').attr('name'),
-                		value = data.field.workingCurrent+"&"+ data.field.ratePower,
-                		result = protocal_set(name, value);
-                        if(result[0] == 'ok') {
-                            layer.msg('提交成功', {
+                    var name = $('#buttonsubmitsecond').attr('name'),
+                        value = data.field.workingCurrent + "&" + data.field.ratePower,
+                        result = protocal_set(name, value);
+                    if(result[0] == 'ok') {
+                        layer.msg('提交成功', {
                             icon: 6,
                             shade: [0.5, '#393D49']
                         });
-                        } else {
-                            layer.msg('提交失败', {
+                    } else {
+                        layer.msg('提交失败', {
                             icon: 5,
                             shade: [0.5, '#393D49']
                         });
-                        }
+                    }
                     return false;
-                });    
-                    
-                    
+                });
                 //初始值的获取
                 onloadmainone = function () {
                     try {
@@ -740,9 +738,6 @@
                     $(id).attr('class', 'layui-btn layui-btn-normal')
                 }
             }
-            
-            
-            
 
             function buttonname(id, value) {
                 $('#' + id).attr('name', value);

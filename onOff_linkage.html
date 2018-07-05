@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css">
         <style>
@@ -20,7 +23,7 @@
             }
         </style>
     </head>
-    <body onload="onloadmain()">
+    <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
                 <a>
@@ -124,45 +127,45 @@
         </fieldset>
         <form class="layui-form layui-form-pane" lay-filter="form_apply_sec">
             <!--<div>-->
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">投影幕</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startFour' title="上升" value="on" name="statusFour">
-                        <input type="radio" id='stopFour' title="无需操作" value="off" name="statusFour"> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">投影机</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startFive' title="关闭" value="on" name="statusFive">
-                        <input type="radio" id='stopFive' title="无需操作" value="off" name="statusFive"> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">内置电脑</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startSix' title="关闭" value="on" name="statusSix">
-                        <input type="radio" id='stopSix' title="无需操作" value="off" name="statusSix"> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">窗帘</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startcurtainlogout' title="打开" value="on" name="curtainlogout">
-                        <input type="radio" id='stopcurtainlogout' title="无需操作" value="off" name="curtainlogout"> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">灯光</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startlamplightlogout' title="打开" value="on" name="lamplightlogout">
-                        <input type="radio" id='stoplamplightlogout' title="无需操作" value="off" name="lamplightlogout"> </div>
-                </div>
-                <!--<fieldset class="layui-elem-field layui-field-box">
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">投影幕</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFour' title="上升" value="on" name="statusFour">
+                    <input type="radio" id='stopFour' title="无需操作" value="off" name="statusFour"> </div>
+            </div>
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">投影机</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startFive' title="关闭" value="on" name="statusFive">
+                    <input type="radio" id='stopFive' title="无需操作" value="off" name="statusFive"> </div>
+            </div>
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">内置电脑</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startSix' title="关闭" value="on" name="statusSix">
+                    <input type="radio" id='stopSix' title="无需操作" value="off" name="statusSix"> </div>
+            </div>
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">窗帘</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startcurtainlogout' title="打开" value="on" name="curtainlogout">
+                    <input type="radio" id='stopcurtainlogout' title="无需操作" value="off" name="curtainlogout"> </div>
+            </div>
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">灯光</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startlamplightlogout' title="打开" value="on" name="lamplightlogout">
+                    <input type="radio" id='stoplamplightlogout' title="无需操作" value="off" name="lamplightlogout"> </div>
+            </div>
+            <!--<fieldset class="layui-elem-field layui-field-box">
                 <legend>空调1</legend>-->
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">空调1</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="on" title="打开" />
-                        <input type="radio" id='stopAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="off" title="无需操作" /> </div>
-                </div>
-                <!--<div class="layui-form-item" pane="">
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">空调1</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="on" title="打开" />
+                    <input type="radio" id='stopAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="off" title="无需操作" /> </div>
+            </div>
+            <!--<div class="layui-form-item" pane="">
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-block">
                         <input type="radio" id='startAirConditionerOneLogout' name="airConditionerOneLogout" value="0" title="制冷" />
@@ -173,15 +176,15 @@
                     <div class="layui-input-inline">
                         <input type="text" name="airConditionerOneLogoutTemper" lay-verify="temp" placeholder="请输入" autocomplete="off" class="layui-input"> </div>
                 </div>-->
-                <!--</fieldset>-->
-                <!--<fieldset class="layui-elem-field layui-field-box">
+            <!--</fieldset>-->
+            <!--<fieldset class="layui-elem-field layui-field-box">
                 <legend>空调2</legend>-->
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">空调2</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="on" title="打开" />
-                        <input type="radio" id='stopAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="off" title="无需操作" /> </div>
-                </div>
+            <div class="layui-form-item layui-form-auto" pane="">
+                <label class="layui-form-label">空调2</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="on" title="打开" />
+                    <input type="radio" id='stopAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="off" title="无需操作" /> </div>
+            </div>
             <!--</div>-->
             <!--<div class="layui-form-item" pane="">
                     <label class="layui-form-label">状态</label>
@@ -211,50 +214,48 @@
                 var layer = layui.layer,
                     form = layui.form,
                     $ = layui.jquery;
-                onloadmain = function () {
-                    try {
-                        var result_couple_on = protocal_get("coupled_on", null);
-                        var result_couple_off = protocal_get("coupled_off", null);
-                        /*var result_couple_on = ['on', 'off', 'on', 'off', 'on', 'off', '0', '16', 'off', '0', '30'];
-                        var result_couple_off = ['on', 'off', 'on', 'off', 'on', 'on', '0', '16', 'off', '0', '30'];*/
-                        if(result_couple_on.length < 11 || result_couple_off.length < 11) {
-                            alert("loadsmartstaus result count failure.");
-                            return false;
-                        }
-                        if(result_couple_on[5] == 'off') {
-                            $('#startAirConditionerOneLogin').prop('disabled', true);
-                            $('#stopAirConditionerOneLogin').prop('disabled', true);
-                            $('#airConditionerOneLoginTemper').prop('disabled', true);
-                        }
-                        if(result_couple_on[8] == 'off') {
-                            $('#startAirConditionerTwoLogin').prop('disabled', true);
-                            $('#stopAirConditionerTwoLogin').prop('disabled', true);
-                            $('#airConditionerTwoLoginTemper').prop('disabled', true);
-                        }
-                        form.val('form_apply_fir', {
-                            "statusOne": result_couple_on[0],
-                            "statusTwo": result_couple_on[1],
-                            "statusThree": result_couple_on[2],
-                            "curtainlogin": result_couple_on[3],
-                            "lamplightlogin": result_couple_on[4],
-                            "airConditionerOneLoginControl": result_couple_on[5],
-                            "airConditionerOneLogin": result_couple_on[6],
-                            "airConditionerOneLoginTemper": result_couple_on[7],
-                            "airConditionerTwoLoginControl": result_couple_on[8],
-                            "airConditionerTwoLogin": result_couple_on[9],
-                            "airConditionerTwoLoginTemper": result_couple_on[10]
-                        });
-                        form.val('form_apply_sec', {
-                            "statusFour": result_couple_off[0],
-                            "statusFive": result_couple_off[1],
-                            "statusSix": result_couple_off[2],
-                            "curtainlogout": result_couple_off[3],
-                            "lamplightlogout": result_couple_off[4],
-                            "airConditionerOneLogoutControl": result_couple_off[5],
-                            "airConditionerTwoLogoutControl": result_couple_off[8]
-                        });
-                    } catch(err) {}
-                }
+                try {
+                    var result_couple_on = protocal_get("coupled_on", null);
+                    var result_couple_off = protocal_get("coupled_off", null);
+                    /*var result_couple_on = ['on', 'off', 'on', 'off', 'on', 'off', '0', '16', 'off', '0', '30'];
+                    var result_couple_off = ['on', 'off', 'on', 'off', 'on', 'on', '0', '16', 'off', '0', '30'];*/
+                    if(result_couple_on.length < 11 || result_couple_off.length < 11) {
+                        alert("loadsmartstaus result count failure.");
+                        return false;
+                    }
+                    if(result_couple_on[5] == 'off') {
+                        $('#startAirConditionerOneLogin').prop('disabled', true);
+                        $('#stopAirConditionerOneLogin').prop('disabled', true);
+                        $('#airConditionerOneLoginTemper').prop('disabled', true);
+                    }
+                    if(result_couple_on[8] == 'off') {
+                        $('#startAirConditionerTwoLogin').prop('disabled', true);
+                        $('#stopAirConditionerTwoLogin').prop('disabled', true);
+                        $('#airConditionerTwoLoginTemper').prop('disabled', true);
+                    }
+                    form.val('form_apply_fir', {
+                        "statusOne": result_couple_on[0],
+                        "statusTwo": result_couple_on[1],
+                        "statusThree": result_couple_on[2],
+                        "curtainlogin": result_couple_on[3],
+                        "lamplightlogin": result_couple_on[4],
+                        "airConditionerOneLoginControl": result_couple_on[5],
+                        "airConditionerOneLogin": result_couple_on[6],
+                        "airConditionerOneLoginTemper": result_couple_on[7],
+                        "airConditionerTwoLoginControl": result_couple_on[8],
+                        "airConditionerTwoLogin": result_couple_on[9],
+                        "airConditionerTwoLoginTemper": result_couple_on[10]
+                    });
+                    form.val('form_apply_sec', {
+                        "statusFour": result_couple_off[0],
+                        "statusFive": result_couple_off[1],
+                        "statusSix": result_couple_off[2],
+                        "curtainlogout": result_couple_off[3],
+                        "lamplightlogout": result_couple_off[4],
+                        "airConditionerOneLogoutControl": result_couple_off[5],
+                        "airConditionerTwoLogoutControl": result_couple_off[8]
+                    });
+                } catch(err) {}
                 form.on('radio(airConditionerOneLoginControl)', function (data) {
                     if(data.value == 'on') {
                         $('#startAirConditionerOneLogin').prop('disabled', false);
@@ -304,7 +305,7 @@
                         }
                     }
                 })
-            });
+            })
             /*提交按钮*/
             function submit_linkage_control(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10, param11, name) {
                 var result = param1 + '&' + param2 + '&' + param3 + '&' + param4 + '&' + param5 + '&' + param6 + '&' + param7 + '&' + param8 + '&' + param9 + '&' + param10 + '&' + param11;

@@ -3,7 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        <meta name="renderer" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
         <style type="text/css">
@@ -247,22 +250,38 @@
                             $('#prjdevice_off').off('mousedown');
                             $('#videoSwitch1').off('mousedown');
                             $('#videoSwitch2').off('mousedown');
+                            $('#prjdevice_on').off('mouseup');
+                            $('#prjdevice_off').off('mouseup');
+                            $('#videoSwitch1').off('mouseup');
+                            $('#videoSwitch2').off('mouseup');
                             $('#videoSwitch1').off('click');
                             $('#videoSwitch2').off('click');
                             $('#prjdevice_on').off("click");
                             $('#prjdevice_off').off("click");
                         } else {
-                        	$('#videoSwitch1').off('mousedown').on('mousedown', function () {
-                                mouse('videoSwitch1','videoSwitch2','prjdevice_on','prjdevice_off');
+                            $('#videoSwitch1').off('mousedown').on('mousedown', function () {
+                                mouse('videoSwitch1', 'videoSwitch2', 'prjdevice_on', 'prjdevice_off');
                             });
-                        	$('#videoSwitch2').off('mousedown').on('mousedown', function () {
-                                mouse('videoSwitch2','videoSwitch1','prjdevice_on','prjdevice_off');
+                            $('#videoSwitch2').off('mousedown').on('mousedown', function () {
+                                mouse('videoSwitch2', 'videoSwitch1', 'prjdevice_on', 'prjdevice_off');
                             });
-                        	$('#prjdevice_on').off('mousedown').on('mousedown', function () {
-                                mouse('prjdevice_on','videoSwitch2','videoSwitch1','prjdevice_off');
+                            $('#prjdevice_on').off('mousedown').on('mousedown', function () {
+                                mouse('prjdevice_on', 'videoSwitch2', 'videoSwitch1', 'prjdevice_off');
                             });
                             $('#prjdevice_off').off('mousedown').on('mousedown', function () {
-                                mouse('prjdevice_off','prjdevice_on','videoSwitch2','videoSwitch1');
+                                mouse('prjdevice_off', 'prjdevice_on', 'videoSwitch2', 'videoSwitch1');
+                            });
+                            $('#videoSwitch1').off('mouseup').on('mouseup', function () {
+                                mouseup('prjdevice_on', 'prjdevice_off', 'videoSwitch1', 'videoSwitch2');
+                            });
+                            $('#videoSwitch2').off('mouseup').on('mouseup', function () {
+                                mouseup('prjdevice_on', 'prjdevice_off', 'videoSwitch1', 'videoSwitch2');
+                            });
+                            $('#prjdevice_on').off('mouseup').on('mouseup', function () {
+                                mouseup('prjdevice_on', 'prjdevice_off', 'videoSwitch1', 'videoSwitch2');
+                            });
+                            $('#prjdevice_off').off('mouseup').on('mouseup', function () {
+                                mouseup('prjdevice_on', 'prjdevice_off', 'videoSwitch1', 'videoSwitch2');
                             });
                             $('#videoSwitch1').off('click').on('click', function () {
                                 smartdevice_prjdevice('smartdevice_prjdevice', 'src1', 'video_1');
@@ -353,7 +372,7 @@
             }
 
             function built_computer(id, content, status) {
-                $('#' + id).text(content)
+                $('#' + id).text(content);
                 try {
                     var result = protocal_set('smartdevice_builcomputer', status);
                     if(result[0] == 'ok') {
@@ -425,6 +444,13 @@
 
             function mouse(id1, id2, id3, id4) {
                 $('#' + id1).attr('class', 'layui-btn layui-btn-radius');
+                $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+                $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
+            }
+
+            function mouseup(id1, id2, id3, id4) {
+                $('#' + id1).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
                 $('#' + id2).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
                 $('#' + id3).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
                 $('#' + id4).attr('class', 'layui-btn layui-btn-radius layui-btn-primary');
