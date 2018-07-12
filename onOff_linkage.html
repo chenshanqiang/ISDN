@@ -3,21 +3,15 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css">
-        <style>
-            .layui-field-box {
-                margin-left: 2%;
-                width: 43%;
-                display: inline-block;
-                /*background: #FF5722;*/
-            }
+        <style type="text/css">
             .layui-form-auto {
-                width: 45.7%;
+                width: 44%;
                 display: inline-block;
                 margin-left: 2%;
             }
@@ -36,7 +30,7 @@
                     <cite>寻呼器联动</cite>
                 </a>
             </span>
-            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="security()" href="javascript:void(0);" title="刷新">
+            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="freThisPaper()" href="javascript:void(0);" title="刷新">
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
@@ -44,39 +38,37 @@
             <legend>寻呼器登录</legend>
         </fieldset>
         <form class="layui-form layui-form-pane" lay-filter="form_apply_fir">
-            <div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">投影幕</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startOne' name="statusOne" value="on" title="打开" />
-                        <input type="radio" id='stopOne' name="statusOne" value="off" title="无需操作" /> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">投影机</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startTwo' name="statusTwo" value="on" title="打开" />
-                        <input type="radio" id='stopTwo' name="statusTwo" value="off" title="无需操作" /> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">内置电脑</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startThree' name="statusThree" value="on" title="打开" />
-                        <input type="radio" id='stopThree' name="statusThree" value="off" title="无需操作" /> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">窗帘</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startlogin' name="curtainlogin" value="on" title="打开" />
-                        <input type="radio" id='stoplogin' name="curtainlogin" value="off" title="无需操作" /> </div>
-                </div>
-                <div class="layui-form-item layui-form-auto" pane="">
-                    <label class="layui-form-label">灯光</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startlamplightlogin' name="lamplightlogin" value="on" title="打开" />
-                        <input type="radio" id='stoplamplightlogin' name="lamplightlogin" value="off" title="无需操作" /> </div>
-                </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影幕</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startOne' name="statusOne" value="on" title="打开" />
+                    <input type="radio" id='stopOne' name="statusOne" value="off" title="无需操作" /> </div>
             </div>
-            <fieldset class="layui-elem-field layui-field-box">
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">投影机</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startTwo' name="statusTwo" value="on" title="打开" />
+                    <input type="radio" id='stopTwo' name="statusTwo" value="off" title="无需操作" /> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">内置电脑</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startThree' name="statusThree" value="on" title="打开" />
+                    <input type="radio" id='stopThree' name="statusThree" value="off" title="无需操作" /> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">窗帘</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startlogin' name="curtainlogin" value="on" title="打开" />
+                    <input type="radio" id='stoplogin' name="curtainlogin" value="off" title="无需操作" /> </div>
+            </div>
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">灯光</label>
+                <div class="layui-input-block">
+                    <input type="radio" id='startlamplightlogin' name="lamplightlogin" value="on" title="打开" />
+                    <input type="radio" id='stoplamplightlogin' name="lamplightlogin" value="off" title="无需操作" /> </div>
+            </div>
+            <fieldset class="layui-elem-field layui-field-box layui-form-auto">
                 <legend>空调1</legend>
                 <div class="layui-form-item" pane="">
                     <label class="layui-form-label">空调1</label>
@@ -96,7 +88,7 @@
                         <input type="text" id='airConditionerOneLoginTemper' name="airConditionerOneLoginTemper" lay-verify="temp" placeholder="请输入" autocomplete="off" class="layui-input"> </div>
                 </div>
             </fieldset>
-            <fieldset class="layui-elem-field layui-field-box">
+            <fieldset class="layui-elem-field layui-field-box layui-form-auto">
                 <legend>空调2</legend>
                 <div class="layui-form-item" pane="">
                     <label class="layui-form-label">空调2</label>
@@ -127,77 +119,48 @@
         </fieldset>
         <form class="layui-form layui-form-pane" lay-filter="form_apply_sec">
             <!--<div>-->
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">投影幕</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startFour' title="上升" value="on" name="statusFour">
                     <input type="radio" id='stopFour' title="无需操作" value="off" name="statusFour"> </div>
             </div>
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">投影机</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startFive' title="关闭" value="on" name="statusFive">
                     <input type="radio" id='stopFive' title="无需操作" value="off" name="statusFive"> </div>
             </div>
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">内置电脑</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startSix' title="关闭" value="on" name="statusSix">
                     <input type="radio" id='stopSix' title="无需操作" value="off" name="statusSix"> </div>
             </div>
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">窗帘</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startcurtainlogout' title="打开" value="on" name="curtainlogout">
                     <input type="radio" id='stopcurtainlogout' title="无需操作" value="off" name="curtainlogout"> </div>
             </div>
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">灯光</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startlamplightlogout' title="打开" value="on" name="lamplightlogout">
                     <input type="radio" id='stoplamplightlogout' title="无需操作" value="off" name="lamplightlogout"> </div>
             </div>
-            <!--<fieldset class="layui-elem-field layui-field-box">
-                <legend>空调1</legend>-->
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调1</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="on" title="打开" />
                     <input type="radio" id='stopAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="off" title="无需操作" /> </div>
             </div>
-            <!--<div class="layui-form-item" pane="">
-                    <label class="layui-form-label">状态</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startAirConditionerOneLogout' name="airConditionerOneLogout" value="0" title="制冷" />
-                        <input type="radio" id='stopAirConditionerOneLogout' name="airConditionerOneLogout" value="1" title="制热" /> </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">温度</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="airConditionerOneLogoutTemper" lay-verify="temp" placeholder="请输入" autocomplete="off" class="layui-input"> </div>
-                </div>-->
-            <!--</fieldset>-->
-            <!--<fieldset class="layui-elem-field layui-field-box">
-                <legend>空调2</legend>-->
-            <div class="layui-form-item layui-form-auto" pane="">
+            <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调2</label>
                 <div class="layui-input-block">
                     <input type="radio" id='startAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="on" title="打开" />
                     <input type="radio" id='stopAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="off" title="无需操作" /> </div>
             </div>
-            <!--</div>-->
-            <!--<div class="layui-form-item" pane="">
-                    <label class="layui-form-label">状态</label>
-                    <div class="layui-input-block">
-                        <input type="radio" id='startAirConditionerTwoLogout' name="airConditionerTwoLogout" value="0" title="制冷" />
-                        <input type="radio" id='stopAirConditionerTwoLogout' name="airConditionerTwoLogout" value="1" title="制热" /> </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">温度</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="airConditionerTwoLogoutTemper" lay-verify="temp" autocomplete="off" class="layui-input"> </div>
-                </div>-->
-            <!--</fieldset>-->
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo2">提交</button>

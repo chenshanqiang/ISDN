@@ -3,18 +3,13 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
         <style type="text/css">
-            input[type='radio'] {
-                height: 20px;
-                width: 20px;
-                cursor: pointer;
-            }
             input[type='text'] {
                 text-align: center;
             }
@@ -26,7 +21,7 @@
             }
         </style>
     </head>
-    <body onload="onloadmain()">
+    <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
                 <a>
@@ -39,7 +34,7 @@
                     <cite>空调配置</cite>
                 </a>
             </span>
-            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="security()" href="javascript:void(0);" title="刷新">
+            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="freThisPaper()" href="javascript:void(0);" title="刷新">
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
@@ -129,7 +124,7 @@
         <fieldset class="layui-elem-field layui-field-box" style="margin-top: 20px;">
             <legend>其他参数设置</legend>
             <!--空调1其他参数设置-->
-            <form class="layui-form">
+            <form class="layui-form" lay-filter="exampleOne">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="min-width: 100px;">空调地址设置</label>
@@ -145,26 +140,26 @@
                     </div>
                 </div>
                 <hr /> </form>
-            <form class="layui-form">
+            <form class="layui-form" lay-filter="exampleTwo">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="min-width: 225px;white-space:nowrap;">关机状态判定条件：工作电流小于</label>
                         <div class="layui-input-inline">
                             <input type="text" class="layui-input" name="workingCurrent" lay-verify="inputnumone" id="air_conditioning_one_working_current_two"> </div>
+                        <div class="layui-form-mid">A</div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-1）</div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label" style="white-space:nowrap;">功率小于</label>
                         <div class="layui-input-inline">
                             <input type="text" class="layui-input" name="ratePower" lay-verify="inputnumtwo" id="air_conditioning_one_rate_power"> </div>
+                        <div class="layui-form-mid">W</div>
                         <div class="layui-form-mid layui-word-aux">（输入范围：0-30）</div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <div class="layui-input-block">
-                            <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond" lay-submit="" lay-filter="demo2">提交</button>
-                        </div>
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" id="buttonsubmitsecond" lay-submit="" lay-filter="demo2">提交</button>
                     </div>
                 </div>
             </form>
@@ -175,9 +170,6 @@
         <script type="text/javascript" src="./js/security.js"></script>
         <script type="text/javascript" src="./js/forbid_backspace.js"></script>
         <script type="text/javascript">
-            function onloadmain() {
-                onloadmainone();
-            }
             layui.use(['layer', 'form', 'element'], function () {
                 layer = layui.layer,
                     form = layui.form,
@@ -253,88 +245,94 @@
                     return false;
                 });
                 //初始值的获取
-                onloadmainone = function () {
-                    try {
-                        var resulttwo, resultthree;
-                        resulttwo = protocal_get('air_one_code', null);
-                        resultthree = protocal_get('air_one_addr', null);
-                        /*resulttwo = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
-                        resultthree = ['1', '1', '1'];*/
-                        $('#cool').prop('checked', ' ');
-                        form.render('radio');
-                        /*红外学码部分*/
-                        if(resulttwo.length < 35) {} else {
-                            buttonCommon(resulttwo[0], '#power_on');
-                            buttonCommon(resulttwo[1], '#power_off');
-                            buttonCommon(resulttwo[17], '#first_cool_temperature_one');
-                            buttonCommon(resulttwo[18], '#first_cool_temperature_two');
-                            buttonCommon(resulttwo[19], '#first_cool_temperature_three');
-                            buttonCommon(resulttwo[20], '#first_cool_temperature_four');
-                            buttonCommon(resulttwo[21], '#first_cool_temperature_five');
-                            buttonCommon(resulttwo[22], '#first_cool_temperature_six');
-                            buttonCommon(resulttwo[23], '#first_cool_temperature_seven');
-                            buttonCommon(resulttwo[24], '#first_cool_temperature_eight');
-                            buttonCommon(resulttwo[25], '#first_cool_temperature_nine');
-                            buttonCommon(resulttwo[26], '#first_cool_temperature_ten');
-                            buttonCommon(resulttwo[27], '#first_cool_temperature_eleven');
-                            buttonCommon(resulttwo[28], '#first_cool_temperature_twelve');
-                            buttonCommon(resulttwo[29], '#first_cool_temperature_thirteen');
-                            buttonCommon(resulttwo[30], '#first_cool_temperature_fourteen');
-                            buttonCommon(resulttwo[31], '#first_cool_temperature_fifteen');
-                            buttonCommon(resulttwo[32], '#air_conditioning_supply_air');
-                            buttonCommon(resulttwo[33], '#air_conditioning_dehumidification');
-                            buttonCommon(resulttwo[34], '#air_conditioning_auto');
-                            buttonvalue('power_on', '0x0001');
-                            buttonvalue('power_off', '0x0000');
-                            buttonvalue('first_cool_temperature_one', '0x0210');
-                            buttonvalue('first_cool_temperature_one', '0x0210');
-                            buttonvalue('first_cool_temperature_two', '0x0211');
-                            buttonvalue('first_cool_temperature_three', '0x0212');
-                            buttonvalue('first_cool_temperature_four', '0x0213');
-                            buttonvalue('first_cool_temperature_five', '0x0214');
-                            buttonvalue('first_cool_temperature_six', '0x0215');
-                            buttonvalue('first_cool_temperature_seven', '0x0216');
-                            buttonvalue('first_cool_temperature_eight', '0x0217');
-                            buttonvalue('first_cool_temperature_nine', '0x0218');
-                            buttonvalue('first_cool_temperature_ten', '0x0219');
-                            buttonvalue('first_cool_temperature_eleven', '0x021a');
-                            buttonvalue('first_cool_temperature_twelve', '0x021b');
-                            buttonvalue('first_cool_temperature_thirteen', '0x021c');
-                            buttonvalue('first_cool_temperature_fourteen', '0x021d');
-                            buttonvalue('first_cool_temperature_fifteen', '0x021e');
-                            buttonname('power_on', 'air_one_code');
-                            buttonname('power_off', 'air_one_code');
-                            buttonname('first_cool_temperature_one', 'air_one_code');
-                            buttonname('first_cool_temperature_two', 'air_one_code');
-                            buttonname('first_cool_temperature_three', 'air_one_code');
-                            buttonname('first_cool_temperature_four', 'air_one_code');
-                            buttonname('first_cool_temperature_five', 'air_one_code');
-                            buttonname('first_cool_temperature_six', 'air_one_code');
-                            buttonname('first_cool_temperature_seven', 'air_one_code');
-                            buttonname('first_cool_temperature_eight', 'air_one_code');
-                            buttonname('first_cool_temperature_nine', 'air_one_code');
-                            buttonname('first_cool_temperature_ten', 'air_one_code');
-                            buttonname('first_cool_temperature_eleven', 'air_one_code');
-                            buttonname('first_cool_temperature_twelve', 'air_one_code');
-                            buttonname('first_cool_temperature_thirteen', 'air_one_code');
-                            buttonname('first_cool_temperature_fourteen', 'air_one_code');
-                            buttonname('first_cool_temperature_fifteen', 'air_one_code');
-                            buttonname('buttonsubmitfirst', 'air_one_addr');
-                            buttonname('buttonsubmitsecond', 'air_one_config');
-                            buttonname('air_conditioning_supply_air', 'air_one_code');
-                            buttonname('air_conditioning_dehumidification', 'air_one_code');
-                            buttonname('air_conditioning_auto', 'air_one_code');
-                        }
-                        if(resultthree[0] == 1 || resultthree[0] == 2) {} else {
-                            $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
-                        }
-                        if(resultthree.length < 3) {} else {
-                            $("#set_air_one_conditioning").val(resultthree[0]);
-                            $("#air_conditioning_one_working_current_two").val(resultthree[1] + "A");
-                            $("#air_conditioning_one_rate_power").val(resultthree[2] + "W");
-                        }
-                    } catch(err) {}
-                }
+                try {
+                    var resulttwo, resultthree;
+                    resulttwo = protocal_get('air_one_code', null);
+                    resultthree = protocal_get('air_one_addr', null);
+                    /*resulttwo = [ '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' ];
+                    resultthree = [ '1', '1', '1' ];*/
+                    $('#cool').prop('checked', ' ');
+                    form.render('radio');
+                    /*红外学码部分*/
+                    if(resulttwo.length < 35) {} else {
+                        buttonCommon(resulttwo[0], '#power_on');
+                        buttonCommon(resulttwo[1], '#power_off');
+                        buttonCommon(resulttwo[17], '#first_cool_temperature_one');
+                        buttonCommon(resulttwo[18], '#first_cool_temperature_two');
+                        buttonCommon(resulttwo[19], '#first_cool_temperature_three');
+                        buttonCommon(resulttwo[20], '#first_cool_temperature_four');
+                        buttonCommon(resulttwo[21], '#first_cool_temperature_five');
+                        buttonCommon(resulttwo[22], '#first_cool_temperature_six');
+                        buttonCommon(resulttwo[23], '#first_cool_temperature_seven');
+                        buttonCommon(resulttwo[24], '#first_cool_temperature_eight');
+                        buttonCommon(resulttwo[25], '#first_cool_temperature_nine');
+                        buttonCommon(resulttwo[26], '#first_cool_temperature_ten');
+                        buttonCommon(resulttwo[27], '#first_cool_temperature_eleven');
+                        buttonCommon(resulttwo[28], '#first_cool_temperature_twelve');
+                        buttonCommon(resulttwo[29], '#first_cool_temperature_thirteen');
+                        buttonCommon(resulttwo[30], '#first_cool_temperature_fourteen');
+                        buttonCommon(resulttwo[31], '#first_cool_temperature_fifteen');
+                        buttonCommon(resulttwo[32], '#air_conditioning_supply_air');
+                        buttonCommon(resulttwo[33], '#air_conditioning_dehumidification');
+                        buttonCommon(resulttwo[34], '#air_conditioning_auto');
+                        buttonvalue('power_on', '0x0001');
+                        buttonvalue('power_off', '0x0000');
+                        buttonvalue('first_cool_temperature_one', '0x0210');
+                        buttonvalue('first_cool_temperature_one', '0x0210');
+                        buttonvalue('first_cool_temperature_two', '0x0211');
+                        buttonvalue('first_cool_temperature_three', '0x0212');
+                        buttonvalue('first_cool_temperature_four', '0x0213');
+                        buttonvalue('first_cool_temperature_five', '0x0214');
+                        buttonvalue('first_cool_temperature_six', '0x0215');
+                        buttonvalue('first_cool_temperature_seven', '0x0216');
+                        buttonvalue('first_cool_temperature_eight', '0x0217');
+                        buttonvalue('first_cool_temperature_nine', '0x0218');
+                        buttonvalue('first_cool_temperature_ten', '0x0219');
+                        buttonvalue('first_cool_temperature_eleven', '0x021a');
+                        buttonvalue('first_cool_temperature_twelve', '0x021b');
+                        buttonvalue('first_cool_temperature_thirteen', '0x021c');
+                        buttonvalue('first_cool_temperature_fourteen', '0x021d');
+                        buttonvalue('first_cool_temperature_fifteen', '0x021e');
+                        buttonname('power_on', 'air_one_code');
+                        buttonname('power_off', 'air_one_code');
+                        buttonname('first_cool_temperature_one', 'air_one_code');
+                        buttonname('first_cool_temperature_two', 'air_one_code');
+                        buttonname('first_cool_temperature_three', 'air_one_code');
+                        buttonname('first_cool_temperature_four', 'air_one_code');
+                        buttonname('first_cool_temperature_five', 'air_one_code');
+                        buttonname('first_cool_temperature_six', 'air_one_code');
+                        buttonname('first_cool_temperature_seven', 'air_one_code');
+                        buttonname('first_cool_temperature_eight', 'air_one_code');
+                        buttonname('first_cool_temperature_nine', 'air_one_code');
+                        buttonname('first_cool_temperature_ten', 'air_one_code');
+                        buttonname('first_cool_temperature_eleven', 'air_one_code');
+                        buttonname('first_cool_temperature_twelve', 'air_one_code');
+                        buttonname('first_cool_temperature_thirteen', 'air_one_code');
+                        buttonname('first_cool_temperature_fourteen', 'air_one_code');
+                        buttonname('first_cool_temperature_fifteen', 'air_one_code');
+                        buttonname('buttonsubmitfirst', 'air_one_addr');
+                        buttonname('buttonsubmitsecond', 'air_one_config');
+                        buttonname('air_conditioning_supply_air', 'air_one_code');
+                        buttonname('air_conditioning_dehumidification', 'air_one_code');
+                        buttonname('air_conditioning_auto', 'air_one_code');
+                    }
+                    if(resultthree[0] == 1 || resultthree[0] == 2) {} else {
+                        $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
+                    }
+                    if(resultthree.length < 3) {} else {
+                        form.val('exampleOne', {
+                            'address': resultthree[0]
+                        })
+                        form.val('exampleTwo', {
+                            'workingCurrent': resultthree[1],
+                            'ratePower': resultthree[2]
+                        })
+                        /*$("#set_air_one_conditioning").val(resultthree[0]);
+                        $("#air_conditioning_one_working_current_two").val(resultthree[1]);
+                        $("#air_conditioning_one_rate_power").val(resultthree[2]);*/
+                    }
+                } catch(err) {}
+                //初始值的结束
                 /*监听radio单选*/
                 form.on('radio(air_conditioning_one_temperature_control)', function (data) {
                     var selcval = $('#selc').val();
@@ -472,9 +470,16 @@
                             $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
                         }
                         if(resulttwo.length < 3) {} else {
-                            $("#set_air_one_conditioning").val(resulttwo[0]);
-                            $("#air_conditioning_one_working_current_two").val(resulttwo[1] + "A");
-                            $("#air_conditioning_one_rate_power").val(resulttwo[2] + "W");
+                            form.val('exampleOne', {
+                                'address': resultthree[0]
+                            })
+                            form.val('exampleTwo', {
+                                'workingCurrent': resultthree[1],
+                                'ratePower': resultthree[2]
+                            })
+                            /*$( "#set_air_one_conditioning" ).val( resulttwo[ 0 ] );
+                            $( "#air_conditioning_one_working_current_two" ).val( resulttwo[ 1 ] + "A" );
+                            $( "#air_conditioning_one_rate_power" ).val( resulttwo[ 2 ] + "W" );*/
                         }
                     } catch(err) {}
                 }
@@ -550,9 +555,16 @@
                             $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
                         }
                         if(resulttwo.length < 3) {} else {
-                            $("#set_air_one_conditioning").val(resulttwo[0]);
-                            $("#air_conditioning_one_working_current_two").val(resulttwo[1] + "A");
-                            $("#air_conditioning_one_rate_power").val(resulttwo[2] + "W");
+                            form.val('exampleOne', {
+                                'address': resultthree[0]
+                            })
+                            form.val('exampleTwo', {
+                                'workingCurrent': resultthree[1],
+                                'ratePower': resultthree[2]
+                            })
+                            /*$( "#set_air_one_conditioning" ).val( resulttwo[ 0 ] );
+                            $( "#air_conditioning_one_working_current_two" ).val( resulttwo[ 1 ] );
+                            $( "#air_conditioning_one_rate_power" ).val( resulttwo[ 2 ] );*/
                         }
                     } catch(err) {}
                 }
@@ -628,9 +640,16 @@
                             $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
                         }
                         if(resulttwo.length < 3) {} else {
-                            $("#set_air_one_conditioning").val(resulttwo[0]);
-                            $("#air_conditioning_one_working_current_two").val(resulttwo[1] + "A");
-                            $("#air_conditioning_one_rate_power").val(resulttwo[2] + "W");
+                            form.val('exampleOne', {
+                                'address': resultthree[0]
+                            })
+                            form.val('exampleTwo', {
+                                'workingCurrent': resultthree[1],
+                                'ratePower': resultthree[2]
+                            })
+                            /*$( "#set_air_one_conditioning" ).val( resulttwo[ 0 ] );
+                            $( "#air_conditioning_one_working_current_two" ).val( resulttwo[ 1 ] + "A" );
+                            $( "#air_conditioning_one_rate_power" ).val( resulttwo[ 2 ] + "W" );*/
                         }
                     } catch(err) {}
                 }
@@ -706,9 +725,16 @@
                             $('#initial_status_conditioning_adress_one').text('请设置正确的空调地址，进行配置！');
                         }
                         if(resulttwo.length < 3) {} else {
-                            $("#set_air_one_conditioning").val(resulttwo[0]);
-                            $("#air_conditioning_one_working_current_two").val(resulttwo[1] + "A");
-                            $("#air_conditioning_one_rate_power").val(resulttwo[2] + "W");
+                            form.val('exampleOne', {
+                                'address': resultthree[0]
+                            })
+                            form.val('exampleTwo', {
+                                'workingCurrent': resultthree[1],
+                                'ratePower': resultthree[2]
+                            })
+                            /*$( "#set_air_one_conditioning" ).val( resulttwo[ 0 ] );
+                            $( "#air_conditioning_one_working_current_two" ).val( resulttwo[ 1 ] );
+                            $( "#air_conditioning_one_rate_power" ).val( resulttwo[ 2 ] );*/
                         }
                     } catch(err) {}
                 }

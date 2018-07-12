@@ -3,10 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="./css/main.css">
         <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css"> </head>
     <body>
@@ -22,7 +22,7 @@
                     <cite>设备启用禁用</cite>
                 </a>
             </span>
-            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="security()" href="javascript:void(0);" title="刷新">
+            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="freThisPaper()" href="javascript:void(0);" title="刷新">
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
@@ -98,7 +98,7 @@
                     $ = layui.jquery;
                 try {
                     var result = protocal_get("linkage", null);
-                    /*var result = ['on','off','on','off','on','off','on','off','on','off','on','off','on','off'];*/
+                    /*var result = ['on','off','on','off','on','off','on','off','on','off','on','off','21','21'];*/
                     if(result.length < 10) {
                         //throw "loadsmartstaus result count failure.";
                     } else {
@@ -114,53 +114,29 @@
                         })
                     }
                 } catch(err) {}
-                form.verify({
-                    inputnum: function (value) {
-                        var reg = /(^[0-9]$)|(^[1-5][0-9]$)|(^60$)/;
-                        if(!value) {
-                            return '输入不能为空！';
-                        }
-                        if(isNaN(value)) {
-                            return '输入有误！';
-                        }
-                        if(!reg.test(value)) {
-                            return '输入有误！';
-                        }
-                    }
-                });
                 //监听提交
                 form.on('submit(demo1)', function (data) {
-                    if(data.field.TimeOne == '' || data.field.TimeTwo == '') {
-                        layer.msg('有数据为空，提交失败！', {
+                    var value = '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + data.field.TimeOne + '&' + data.field.TimeTwo + '&' + '1' + '&' + '1';
+                    var result = protocal_set('project_work', value);
+                    if(result[0] == 'ok') {
+                        layer.msg('提交成功！', {
+                            time: 3000,
+                            icon: 1,
+                            anim: 0,
+                            skin: 'message',
+                            shade: [0.5, '#393D49']
+                        });
+                    } else {
+                        layer.msg('提交失败！', {
                             time: 3000,
                             icon: 2,
                             anim: 0,
                             skin: 'message',
                             shade: [0.5, '#393D49']
                         });
-                    } else {
-                        var value = '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + '1' + '&' + data.field.TimeOne + '&' + data.field.TimeTwo + '&' + '1' + '&' + '1';
-                        var result = protocal_set('project_work', value);
-                        if(result[0] == 'ok') {
-                            layer.msg('提交成功！', {
-                                time: 3000,
-                                icon: 1,
-                                anim: 0,
-                                skin: 'message',
-                                shade: [0.5, '#393D49']
-                            });
-                        } else {
-                            layer.msg('提交失败！', {
-                                time: 3000,
-                                icon: 2,
-                                anim: 0,
-                                skin: 'message',
-                                shade: [0.5, '#393D49']
-                            });
-                        }
                     }
                     return false;
-                });
+                })
                 form.on('radio(statusOne)', function (data) {
                     if(data.value == 'on') {
                         switchbutton('project', 'on');
@@ -203,7 +179,21 @@
                         switchbutton('air_two', 'off');
                     }
                 })
-            });
+                form.verify({
+                    inputnum: function (value) {
+                        var reg = /(^[0-9]$)|(^[1-5][0-9]$)|(^60$)/;
+                        if(!value) {
+                            return '输入不能为空！';
+                        }
+                        if(isNaN(value)) {
+                            return '输入有误！';
+                        }
+                        if(!reg.test(value)) {
+                            return '输入有误！';
+                        }
+                    }
+                })
+            })
 
             function switchbutton(name, value) {
                 try {

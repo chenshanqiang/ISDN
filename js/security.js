@@ -1,14 +1,15 @@
 // JavaScript Document
-var security = function(){
-	var user = getCookiename( "username" ),
-	pwd = getCookiepwd( "pass" ),
-	usernameone = getCookienameone( "usernameone" ),
-	pwdone = getCookiepwdone( "passone" );
-	if ( user == "user" && pwd == "pwd" ) {} else if( usernameone=="dsppa" && pwdone=="dsppa" ){}else {
-		parent.jumpmain();
-	}
+var user = getCookiename( "username" ),
+pwd = getCookiepwd( "pass" ),
+usernameone = getCookienameone( "usernameone" ),
+pwdone = getCookiepwdone( "passone" );
+if ( user == "user" && pwd == "pwd" ) {} else if( usernameone=="dsppa" && pwdone=="dsppa" ){
+}else {
+	parent.jumpmain();
 }
-security();
+function freThisPaper(){
+	 location.reload();
+}
 function getCookiename( cname ) {
 	var name = cname + "=";
 	var ca = document.cookie.split( ';' );

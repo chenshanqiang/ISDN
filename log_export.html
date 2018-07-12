@@ -3,15 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <link rel="stylesheet" href="./css/main.css"> 
-    </head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="./css/main.css"> </head>
     <body>
         <div class="x-nav">
-            <span class="layui-breadcrumb">
+            <span class="layui-breadcrumb" lay-separator=">">
                 <a>
                     <cite>首页</cite>
                 </a>
@@ -22,7 +21,7 @@
                     <cite>日志导出</cite>
                 </a>
             </span>
-            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="security()" href="javascript:void(0);" title="刷新">
+            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="freThisPaper()" href="javascript:void(0);" title="刷新">
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
@@ -34,18 +33,20 @@
                         <th style="width:50%">操作</th>
                     </tr>
                 </thead>
-                <tbody id='tbody' style="height:100px!important;"> </tbody>
+                <tbody id='tbody'> </tbody>
             </table>
         </div>
+        <script type="text/javascript" src="./js/security.js"></script>
+        <script type="text/javascript" src="./js/forbid_backspace.js"></script>
         <script type="text/javascript" src="./layui/layui.js"></script>
         <script type="text/javascript" src="./js/jquery-3.2.1.js"></script>
         <script type="text/javascript" src="./js/update.js"></script>
         <script type="text/javascript">
             layui.use(['element', 'jquery'], function () {
-                var element = layui.element(),
-                    $ = layui.jquery;
+                var $ = layui.jquery;
                 try {
                     result = protocal_get_one('log_file', null);
+                    result = ['wtmp', 'UpgradePrint.log', 'Daemon.log', 'Boa.log', 'udpserver.log', 'Upgrade.log'];
                     if(result.length < 1) {
                         return;
                     }
@@ -58,6 +59,7 @@
 
             function loadingfile(parse) {
                 var filename = $(parse).parent().prev().text();
+                alert(filename)
                 var test;
                 switch(filename) {
                     case "wtmp":

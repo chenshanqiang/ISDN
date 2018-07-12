@@ -3,22 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title>音视频一线通终端管理设置</title>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-        <meta name="renderer" content="webkit"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" type="text/css" href="./css/main.css">
-        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css">
-        <style type="text/css">
-            .shan {
-                background: red!important;
-            }
-            input {
-                height: 17px;
-                width: 17px;
-            }
-        </style>
-    </head>
+        <link rel="stylesheet" type="text/css" href="./font-awesome/css/font-awesome.css"> </head>
     <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
@@ -32,7 +22,7 @@
                     <cite>配置支持</cite>
                 </a>
             </span>
-            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="security()" href="javascript:void(0);" title="刷新">
+            <a class="layui-btn layui-btn-sm" style="float: right;" onclick="freThisPaper()" href="javascript:void(0);" title="刷新">
                 <i class="layui-icon layui-icon-refresh"></i>
             </a>
         </div>
@@ -52,8 +42,7 @@
                             <span id="zubo"></span>
                         </td>
                         <td style="text-align: center;" style="line-height: 10px;">
-                            <input type="radio" id='cstart' title="是" value="on" name="cstatus" lay-filter="cstatus" />
-                            <input type="radio" id='cstop' title="否" value="off" name="cstatus" lay-filter="cstatus" /> </td>
+                            <input name="cstatus" title="开关" id='cstatus' type="checkbox" checked="" lay-skin="switch" lay-text="是|否" lay-filter="switchTest"> </td>
                     </tr>
                 </tbody>
             </table>
@@ -71,16 +60,16 @@
                     $ = layui.jquery;　
                 try {
                     var result = protocal_get('configure', null);
-                    var result = ['on','on'];
+                    /*var result = ['off','ok'];*/
                     if(result.length != 2) {} else {
                         if(result[0] == 'on') {
                             form.val('form', {
-                                'cstatus': 'on'
+                                'cstatus': true
                             })
                             $("#zubo").html("是");
                         } else {
                             form.val('form', {
-                                'cstatus': 'off'
+                                'cstatus': false
                             })
                             $("#zubo").html("否");
                         }
@@ -88,8 +77,8 @@
                 } catch(err) {
                     alert(err);
                 }
-                form.on('radio(cstatus)', function (data) {
-                    if(data.value == 'on') {
+                form.on('switch(switchTest)', function (data) {
+                    if(this.checked == true) {
                         layer.open({
                             title: ' ',
                             icon: 3,
@@ -127,6 +116,8 @@
                                 }
                             },
                             btn2: function (index) {
+                                $('#cstatus').prop('checked', false);
+                                form.render('checkbox');
                                 layer.close(index);
                             }
                         });
@@ -168,6 +159,8 @@
                                 }
                             },
                             btn2: function (index) {
+                                $('#cstatus').prop('checked', true);
+                                form.render('checkbox');
                                 layer.close(index);
                             }
                         });　
