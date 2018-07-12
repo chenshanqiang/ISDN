@@ -45,12 +45,12 @@
                 var $ = layui.jquery;
                 try {
                     result = protocal_get_one('log_file', null);
-                    result = ['1.log', '2.log', '3.log', '4.log', '5.log', '6.log'];
+                    result = ['1.log', '2.log', '3.log', '4.log', '5.log', '6.log', '7.log'];
                     if(result.length < 1) {
                         return;
                     }
-                    for(var i = 0; i < result.length; i++) {
-                        var trhtml = "<tr><td>" + result[i] + "</td><td style='text-align:center;'><a class='layui-btn layui-btn-normal' href='downFile.php?name=" + result[i] + "'>文件下载</a></td></tr>";
+                    for(var i = 0; i < result.length - 1; i++) {
+                        var trhtml = "<tr><td>" + result[i] + "</td><td style='text-align:center;'><a class='layui-btn layui-btn-normal' href='php/downFile.php?name=" + result[i] + "'>文件下载</a></td></tr>";
                         $('#tbody').append(trhtml);
                     }
                 } catch(err) {}
