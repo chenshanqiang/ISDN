@@ -249,14 +249,14 @@
                     var resulttwo, resultthree;
                     resulttwo = protocal_get('air_one_code', null);
                     resultthree = protocal_get('air_one_addr', null);
-                    /*resulttwo = [ '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' ];
-                    resultthree = [ '1', '1', '1' ];*/
+                    /*resulttwo = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+                    resultthree = ['1', '1', '1'];*/
                     $('#cool').prop('checked', ' ');
                     form.render('radio');
                     /*红外学码部分*/
                     if(resulttwo.length < 35) {} else {
-                        buttonCommon(resulttwo[0], '#power_on');
-                        buttonCommon(resulttwo[1], '#power_off');
+                        buttonOnOff(resulttwo[0], '#power_on');
+                        buttonOnOff(resulttwo[1], '#power_off');
                         buttonCommon(resulttwo[17], '#first_cool_temperature_one');
                         buttonCommon(resulttwo[18], '#first_cool_temperature_two');
                         buttonCommon(resulttwo[19], '#first_cool_temperature_three');
@@ -406,8 +406,8 @@
                         /*var resultone = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
                         var resulttwo = ['1', '1', '1'];*/
                         if(resultone.length < 35) {} else {
-                            buttonCommon(resultone[0], '#power_on');
-                            buttonCommon(resultone[1], '#power_off');
+                            buttonOnOff(resultone[0], '#power_on');
+                            buttonOnOff(resultone[1], '#power_off');
                             buttonCommon(resultone[17], '#first_cool_temperature_one');
                             buttonCommon(resultone[18], '#first_cool_temperature_two');
                             buttonCommon(resultone[19], '#first_cool_temperature_three');
@@ -492,8 +492,8 @@
                         var resulttwo = protocal_get('air_one_addr', null);
                         /*var resultone = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
                         var resulttwo = ['2', '1', '1'];*/
-                        buttonCommon(resultone[0], '#power_on');
-                        buttonCommon(resultone[1], '#power_off');
+                        buttonOnOff(resultone[0], '#power_on');
+                        buttonOnOff(resultone[1], '#power_off');
                         buttonCommon(resultone[2], '#first_cool_temperature_one');
                         buttonCommon(resultone[3], '#first_cool_temperature_two');
                         buttonCommon(resultone[4], '#first_cool_temperature_three');
@@ -577,8 +577,8 @@
                         var resulttwo = protocal_get('air_two_addr', null);
                         /* var resultone = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
                          var resulttwo = ['3', '1', '1'];*/
-                        buttonCommon(resultone[0], '#power_on');
-                        buttonCommon(resultone[1], '#power_off');
+                        buttonOnOff(resultone[0], '#power_on');
+                        buttonOnOff(resultone[1], '#power_off');
                         buttonCommon(resultone[17], '#first_cool_temperature_one');
                         buttonCommon(resultone[18], '#first_cool_temperature_two');
                         buttonCommon(resultone[19], '#first_cool_temperature_three');
@@ -662,8 +662,8 @@
                         var resulttwo = protocal_get('air_two_addr', null);
                         /*var resultone = ['1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
                         var resulttwo = ['4', '1', '1'];*/
-                        buttonCommon(resultone[0], '#power_on');
-                        buttonCommon(resultone[1], '#power_off');
+                        buttonOnOff(resultone[0], '#power_on');
+                        buttonOnOff(resultone[1], '#power_off');
                         buttonCommon(resultone[17], '#first_cool_temperature_one');
                         buttonCommon(resultone[18], '#first_cool_temperature_two');
                         buttonCommon(resultone[19], '#first_cool_temperature_three');
@@ -756,12 +756,22 @@
             function refresh(id) {
                 airconditionselect();
             }
+            
+            /*开机和关机*/
+           	function buttonOnOff(number, id) {
+                if(number == '0') {
+                	$(id).attr('class', 'layui-btn layui-btn-normal');
+                } else {
+                	$(id).attr('class', 'layui-btn forbidusing');
+                    
+                }
+            }
             /*按钮通用*/
             function buttonCommon(number, id) {
                 if(number == '0') {
-                    $(id).attr('class', 'layui-btn forbidusing')
+                	$(id).attr('class', 'layui-btn forbidusing');
                 } else {
-                    $(id).attr('class', 'layui-btn layui-btn-normal')
+                    $(id).attr('class', 'layui-btn layui-btn-normal');
                 }
             }
 

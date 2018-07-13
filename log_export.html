@@ -7,7 +7,8 @@
         <meta name="renderer" content="webkit" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" type="text/css" href="./css/main.css"> </head>
+        <link rel="stylesheet" type="text/css" href="./css/main.css"> 
+    </head>
     <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
@@ -50,11 +51,11 @@
                         return;
                     }
                     for(var i = 0; i < result.length - 1; i++) {
-                        var trhtml = "<tr><td>" + result[i] + "</td><td style='text-align:center;'><a class='layui-btn layui-btn-normal' href='php/downFile.php?name=" + result[i] + "'>文件下载</a></td></tr>";
+                        var trhtml = "<tr><td>" + result[i] + "</td><td style='text-align:center;'><a class='layui-btn' href='php/downFile.php?name=" + result[i] + "'>文件下载</a></td></tr>";
                         $('#tbody').append(trhtml);
                     }
                 } catch(err) {
-                	alert(err)
+                    alert(err)
                 }
             })
         </script>

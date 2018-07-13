@@ -155,12 +155,6 @@
                 if(resultone[0] == '0') {
                     $('#selc').val('空调2')
                     $('#optionone').attr('disabled', "")
-                    /*if(selcval == '空调1') {
-                        $('#selc').val('空调2');
-                        $('#optionone').attr('disabled',"");
-                    } else {
-                    	$('#optionone').removeAttr('disabled');
-                    }*/
                     form.render('select');
                 } else {
                     $('#optionone').removeAttr('disabled');
@@ -203,19 +197,29 @@
                                         $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                         $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                         $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            if(settingfinal < '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '29') {
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_mode', '3');
+                                            } else if(temp == '30') {
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            if(settingfinal > '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '17') {
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_temperature_minus', '4');
+                                            } else if(temp == '16') {
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         break;
@@ -224,19 +228,29 @@
                                         $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                         $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                         $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            if(settingfinal < '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '29') {
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_mode', '3');
+                                            } else if(temp == '30') {
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            if(settingfinal > '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '17') {
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_temperature_minus', '4');
+                                            } else if(temp == '16') {
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         break;
@@ -283,13 +297,6 @@
                     $('#selc').val('空调1');
                     $('#optiontwo').attr('disabled', "");
                     form.render('select');
-                    /*if(selcval == '空调2') {
-                        $('#selc').val('空调1');
-                        $('#optiontwo').attr('disabled',"");
-                        form.render('select');
-                    } else {
-                    	$('#optiontwo').removeAttr('disabled');
-                    }*/
                 } else {
                     $('#optiontwo').removeAttr('disabled');
                     form.render('select');
@@ -328,43 +335,59 @@
                                         break;
                                     case '1':
                                         $("#mode").val('制热');
-                                        /*$('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');*/
                                         $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            if(settingfinal < '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '29') {
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_mode', '3');
+                                            } else if(temp == '30') {
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            if(settingfinal > '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '17') {
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_temperature_minus', '4');
+                                            } else if(temp == '16') {
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         break;
                                     case '2':
                                         $("#mode").val('制冷');
-                                        /*$('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');*/
                                         $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            if(settingfinal < '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '29') {
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_mode', '3');
+                                            } else if(temp == '30') {
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            if(settingfinal > '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else {
+                                            var temp = $('#setting').val();
+                                            alert(temp)
+                                            if(temp == '17') {
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                airConditioning('air_conditioning_temperature_minus', '4');
+                                            } else if(temp == '16') {
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                            } else {
+                                                airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
                                         break;
@@ -435,12 +458,6 @@
                     if(resultone[0] == '0') {
                         $('#selc').val('空调2')
                         $('#optionone').attr('disabled', "")
-                        /*if(selcval == '空调1') {
-                            $('#selc').val('空调2');
-                            $('#optionone').attr('disabled',"");
-                        } else {
-                        	$('#optionone').removeAttr('disabled');
-                        }*/
                         form.render('select');
                     } else {
                         $('#optionone').removeAttr('disabled');
@@ -483,19 +500,29 @@
                                             $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                             $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                if(settingfinal < '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '29') {
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                } else if(temp == '30') {
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                if(settingfinal > '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '17') {
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_temperature_minus', '4');
+                                                } else if(temp == '16') {
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             break;
@@ -504,19 +531,29 @@
                                             $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                             $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                if(settingfinal < '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '29') {
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                } else if(temp == '30') {
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                if(settingfinal > '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '17') {
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_temperature_minus', '4');
+                                                } else if(temp == '16') {
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             break;
@@ -563,13 +600,6 @@
                         $('#selc').val('空调1');
                         $('#optiontwo').attr('disabled', "");
                         form.render('select');
-                        /*if(selcval == '空调2') {
-                            $('#selc').val('空调1');
-                            $('#optiontwo').attr('disabled',"");
-                            form.render('select');
-                        } else {
-                        	$('#optiontwo').removeAttr('disabled');
-                        }*/
                     } else {
                         $('#optiontwo').removeAttr('disabled');
                         form.render('select');
@@ -608,43 +638,59 @@
                                             break;
                                         case '1':
                                             $("#mode").val('制热');
-                                            /*$('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');*/
                                             $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                if(settingfinal < '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '29') {
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                } else if(temp == '30') {
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                if(settingfinal > '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '17') {
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_temperature_minus', '4');
+                                                } else if(temp == '16') {
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             break;
                                         case '2':
                                             $("#mode").val('制冷');
-                                            /*$('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');*/
                                             $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                if(settingfinal < '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '29') {
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                } else if(temp == '30') {
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                if(settingfinal > '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else {
+                                                var temp = $('#setting').val();
+                                                alert(temp)
+                                                if(temp == '17') {
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                                    airConditioning('air_conditioning_temperature_minus', '4');
+                                                } else if(temp == '16') {
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                } else {
+                                                    airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             break;
@@ -687,7 +733,7 @@
                         } else {}
                     }
                     form.render();
-                }, 2000);
+                }, 1000);
                 /*监听按钮click事件开始*/
                 $('#air_conditioning_power_on').on('click', function () {
                     airConditioning('air_conditioning_power_on', '0');
