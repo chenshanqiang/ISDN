@@ -127,7 +127,7 @@
                             var timer = setInterval(function () {
                                 try {
                                     var resultResult = protocal_get_one("UPGRADENOW", null);
-                                    /*var resultResult = ['UPGRADENOW'];*/
+                                    /*var resultResult = ['FAILED_RESTORE'];*/
                                     switch(resultResult[0]) {
                                         case 'SUCCESS':
                                             $('#fresh').attr('href', 'javascript:location.replace(location.href);');
@@ -150,9 +150,9 @@
                                                         closeBtn: 0,
                                                     })
                                                     clearInterval(timer);
-                                                    setCookie("username", "", "pass", "");
+                                                    setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                                     setTimeout(function () {
-                                                        window.parent.location.reload();
+                                                        window.parent.location.href ="index.html";
                                                     }, 15000);
                                                 },
                                             });
@@ -173,7 +173,7 @@
                                                 skin: "layui-layer-molv",
                                                 closeBtn: 1,
                                                 yes: function (index) {
-                                                    window.parent.location.reload();
+                                                    window.parent.location.href ="index.html";
                                                     top.layer.close(index);
                                                 },
                                             });　
@@ -189,7 +189,7 @@
                                                 skin: "layui-layer-molv",
                                                 closeBtn: 1,
                                                 yes: function (index) {
-                                                    window.parent.location.reload();
+                                                    window.parent.location.href ="index.html";
                                                     top.layer.close(index);
                                                 },
                                             });　
@@ -206,9 +206,9 @@
                                                 closeBtn: 0,
                                             })
                                             clearInterval(timer);
-                                            setCookie("username", "", "pass", "");
+                                            setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                             setTimeout(function () {
-                                                window.parent.location.reload();
+                                                window.parent.location.href ="index.html";
                                             }, 240000);
                                             clearInterval(timer);
                                             break;
@@ -235,7 +235,7 @@
                                                     clearInterval(timer);
                                                     setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                                     setTimeout(function () {
-                                                        window.parent.location.reload();
+                                                        window.parent.location.href ="index.html";
                                                     }, 15000);
                                                 },
                                             });
@@ -252,7 +252,7 @@
                                                 closeBtn: 1,
                                                 yes: function (index) {
                                                     top.layer.close(index);
-                                                    window.location.reload();
+                                                    window.parent.location.href ="index.html";
                                                 },
                                             });　
                                             clearInterval(timer);
@@ -269,9 +269,9 @@
                                                 closeBtn: 0,
                                             })
                                             clearInterval(timer);
-                                            setCookie("username", "", "pass", "");
+                                            setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                             setTimeout(function () {
-                                                window.parent.location.reload();
+                                                window.parent.location.href ="index.html";
                                             }, 200000);
                                             clearInterval(timer);
                                             break;
@@ -298,7 +298,7 @@
                                                     clearInterval(timer);
                                                     setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                                     setTimeout(function () {
-                                                        window.parent.location.reload();
+                                                        window.parent.location.href ="index.html";
                                                     }, 15000);
                                                 },
                                             });
