@@ -41,7 +41,7 @@
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">投影幕</label>
                 <div class="layui-input-block">
-                    <input type="radio" id='startOne' name="statusOne" value="on" title="打开" />
+                    <input type="radio" id='startOne' name="statusOne" value="on" title="下降" />
                     <input type="radio" id='stopOne' name="statusOne" value="off" title="无需操作" /> </div>
             </div>
             <div class="layui-form-item" pane="">
@@ -140,25 +140,25 @@
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">窗帘</label>
                 <div class="layui-input-block">
-                    <input type="radio" id='startcurtainlogout' title="打开" value="on" name="curtainlogout">
+                    <input type="radio" id='startcurtainlogout' title="关闭" value="on" name="curtainlogout">
                     <input type="radio" id='stopcurtainlogout' title="无需操作" value="off" name="curtainlogout"> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">灯光</label>
                 <div class="layui-input-block">
-                    <input type="radio" id='startlamplightlogout' title="打开" value="on" name="lamplightlogout">
+                    <input type="radio" id='startlamplightlogout' title="关闭" value="on" name="lamplightlogout">
                     <input type="radio" id='stoplamplightlogout' title="无需操作" value="off" name="lamplightlogout"> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调1</label>
                 <div class="layui-input-block">
-                    <input type="radio" id='startAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="on" title="打开" />
+                    <input type="radio" id='startAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="on" title="关闭" />
                     <input type="radio" id='stopAirConditionerOneLogoutControl' name="airConditionerOneLogoutControl" value="off" title="无需操作" /> </div>
             </div>
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">空调2</label>
                 <div class="layui-input-block">
-                    <input type="radio" id='startAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="on" title="打开" />
+                    <input type="radio" id='startAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="on" title="关闭" />
                     <input type="radio" id='stopAirConditionerTwoLogoutControl' name="airConditionerTwoLogoutControl" value="off" title="无需操作" /> </div>
             </div>
             <div class="layui-form-item">
@@ -181,7 +181,8 @@
                     var result_couple_on = protocal_get("coupled_on", null);
                     var result_couple_off = protocal_get("coupled_off", null);
                     /*var result_couple_on = ['on', 'off', 'on', 'off', 'on', 'off', '0', '16', 'off', '0', '30'];
-                    var result_couple_off = ['on', 'off', 'on', 'off', 'on', 'on', '0', '16', 'off', '0', '30'];*/
+                    var result_couple_off = ['on', 'off', 'on', 'off', 'off', 'on', '0', '16', 'off', '0', '30'];
+*/
                     if(result_couple_on.length < 11 || result_couple_off.length < 11) {
                         alert("loadsmartstaus result count failure.");
                         return false;
@@ -244,10 +245,16 @@
                     form.render();
                 })
                 form.on('submit(demo1)', function (data) {
+                    /* layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })*/
                     submit_linkage_control(data.field.statusOne, data.field.statusTwo, data.field.statusThree, data.field.curtainlogin, data.field.lamplightlogin, data.field.airConditionerOneLoginControl, data.field.airConditionerOneLogin, data.field.airConditionerOneLoginTemper, data.field.airConditionerTwoLoginControl, data.field.airConditionerTwoLogin, data.field.airConditionerTwoLoginTemper, 'coupled_on');
                     return false;
                 });
                 form.on('submit(demo2)', function (data) {
+                    /*layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })*/
                     submit_linkage_control(data.field.statusFour, data.field.statusFive, data.field.statusSix, data.field.curtainlogout, data.field.lamplightlogout, data.field.airConditionerOneLogoutControl, '1', '30', data.field.airConditionerTwoLogoutControl, '1', '30', 'coupled_off');
                     return false;
                 });

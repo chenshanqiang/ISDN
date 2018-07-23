@@ -102,20 +102,20 @@
         <!--控制-->
         <fieldset class="layui-elem-field layui-field-box">
             <legend>控制</legend>
-            <div class="layui-form layui-form-pane">
+            <form class="layui-form layui-form-pane">
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-normal" id="air_conditioning_power_on">开机</button>
-                            <button class="layui-btn layui-btn-normal" id="air_conditioning_power_off">关机</button>
-                            <button class="layui-btn layui-btn-normal" id="air_conditioning_mode">模式</button>
-                            <button class="layui-btn layui-btn-normal" id="air_conditioning_temperature_plus">温度+</button>
-                            <button class="layui-btn layui-btn-normal" id="air_conditioning_temperature_minus">温度－</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_power_on" lay-submit="" id="air_conditioning_power_on">开机</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_power_off" lay-submit="" id="air_conditioning_power_off">关机</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_mode" lay-submit="" id="air_conditioning_mode">模式</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_temperature_plus" lay-submit="" id="air_conditioning_temperature_plus">温度+</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_temperature_minus" lay-submit="" id="air_conditioning_temperature_minus">温度－</button>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item" style="color: red;text-align: center;"> 注：除制冷，制热模式下，“温度＋”和“温度－”按钮不可控！ </div>
-            </div>
+            </form>
         </fieldset>
         <script type="text/javascript" src="./layui/layui.js"></script>
         <script type="text/javascript" src="./js/protocal.js"></script>
@@ -205,6 +205,7 @@
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -214,9 +215,10 @@
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 airConditioning('air_conditioning_temperature_minus', '4');
                                             } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -234,6 +236,7 @@
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -243,9 +246,10 @@
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 airConditioning('air_conditioning_temperature_minus', '4');
                                             } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -340,6 +344,7 @@
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -349,9 +354,10 @@
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 airConditioning('air_conditioning_temperature_minus', '4');
                                             } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -367,6 +373,7 @@
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -376,9 +383,10 @@
                                                 $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 airConditioning('air_conditioning_temperature_minus', '4');
                                             } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                             } else {
                                                 airConditioning('air_conditioning_mode', '3');
+                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                 $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                             }
                                         })
@@ -500,6 +508,7 @@
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -509,9 +518,10 @@
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                     airConditioning('air_conditioning_temperature_minus', '4');
                                                 } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -529,6 +539,7 @@
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -538,9 +549,10 @@
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                     airConditioning('air_conditioning_temperature_minus', '4');
                                                 } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -635,6 +647,7 @@
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -644,15 +657,19 @@
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                     airConditioning('air_conditioning_temperature_minus', '4');
                                                 } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
                                             break;
                                         case '2':
                                             $("#mode").val('制冷');
+                                            
+                                            
+                                            
                                             $('#air_conditioning_temperature_plus').off('click').on('click', function () {
                                                 var temp = $('#setting').val();
                                                 if(temp == '29') {
@@ -662,6 +679,7 @@
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -671,9 +689,10 @@
                                                     $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                     airConditioning('air_conditioning_temperature_minus', '4');
                                                 } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
                                                 } else {
                                                     airConditioning('air_conditioning_mode', '3');
+                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
                                                     $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
                                                 }
                                             })
@@ -719,15 +738,18 @@
                     form.render();
                 }, 2000);
                 /*监听按钮click事件开始*/
-                $('#air_conditioning_power_on').on('click', function () {
+                form.on('submit(air_conditioning_power_on)', function (data) {
                     airConditioning('air_conditioning_power_on', '0');
-                })
-                $('#air_conditioning_power_off').on('click', function () {
+                    return false;
+                });
+                form.on('submit(air_conditioning_power_off)', function (data) {
                     airConditioning('air_conditioning_power_off', '1');
-                })
-                $('#air_conditioning_mode').on('click', function () {
+                    return false;
+                });
+                form.on('submit(air_conditioning_mode)', function (data) {
                     airConditioning('air_conditioning_mode', '2');
-                })
+                    return false;
+                });
                 /*监听按钮click事件结束*/
                 //监听select事件
                 form.on('select(selc)', function (data) {

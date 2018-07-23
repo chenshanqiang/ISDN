@@ -175,7 +175,12 @@
                         if(andResultOne == andResultFive && andResultTwo == andResultSix && andResultThree == andResultSeven && andResultFour == andResultEight) {
                             var base = new Base64();
                             var result_51 = base.encode(result_5);
-                            var value = data.field.ipOne + '&' + data.field.portOne + '&' + data.field.portTwo + '&' + data.field.ipTwo + '&' + data.field.subnet + '&' + data.field.gateWay + '&' + data.field.mac + '&' + result_51;
+                            if(usernameone == 'dsppa') {
+                                var value = data.field.ipOne + '&' + data.field.portOne + '&' + data.field.portTwo + '&' + data.field.ipTwo + '&' + data.field.subnet + '&' + data.field.gateWay + '&' + data.field.mac + '&' + result_51;
+                            }else{
+                            	var value = resultone[0] + '&' + resultone[1] + '&' + resultthree[1] + '&' + data.field.ipTwo + '&' + data.field.subnet + '&' + data.field.gateWay + '&' + data.field.mac + '&' + result_51;
+
+                            }
                             try {
                                 //var resultarray = ['ok','ok','ok'];
                                 var resultarray = protocal_set('webip', value);
