@@ -262,7 +262,7 @@
                 /*提交按钮1*/
                 form.on('submit(demo1)', function (data) {
                     var name = $('#buttonsubmitfirst').attr('name'),
-                        result = protocal_set(name, data.field.address * 10);
+                        result = protocal_set(name, data.field.address);
                     if(result[0] == 'ok') {
                         layer.msg('提交成功', {
                             icon: 6,
