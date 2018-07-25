@@ -64,7 +64,7 @@
                                         <cite>空调控制</cite>
                                     </a>
                                 </dd>
-                                <dd class="">
+                                <dd id="app" v-if="status === 'Y'" class="">
                                     <a href="javascript:;" onclick="href_web('log_export')" target="main">
                                         <cite>日志导出</cite>
                                     </a>
@@ -177,10 +177,22 @@
         <script type="text/javascript" src="./js/protocal.js"></script>
         <script type="text/javascript" src="./js/base64.js"></script>
         <script type="text/javascript" src="./js/forbid_backspace.js"></script>
+        <script type="text/javascript" src="./js/vue.min.js"></script>
         <script type="text/javascript">
-            var usernameone = getCookienameone("usernameone"),
-                pwdone = getCookiepwdone("passone");
-            if(usernameone != "dsppa" && pwdone != "dsppa") {} else {}
+            var usernameone = getCookienameone("usernameone");
+            if(usernameone == 'dsppa') {
+                var statusyn = 'Y';
+            } else {
+                var statusyn = 'N';
+            }
+            new Vue({
+                el: '#app',
+                data: {
+                    status: statusyn
+                }
+            })
+        </script>
+        <script type="text/javascript">
             layui.use(['layer', 'element'], function () {
                 var layer = layui.layer,
                     $ = layui.jquery;
