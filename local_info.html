@@ -128,6 +128,7 @@
                                     skin: "layui-layer-molv",
                                     closeBtn: 0,
                                 })
+                                layer.close(index);
                                 setCookie("username", "", "pass", "", "usernameone", "", "passone", "");
                                 setTimeout(function () {
                                     window.parent.location.href ="index.html";
