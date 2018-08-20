@@ -7,7 +7,16 @@
         <meta name="renderer" content="webkit" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="stylesheet" type="text/css" href="./css/main.css"> </head>
+        <link rel="stylesheet" type="text/css" href="./css/main.css"> 
+        <style type="text/css">
+        	.layui-form-label{
+        		width: 120px!important;
+        	}
+        	.layui-input-block{
+        		margin-left:120px!important;
+        	}
+       	</style>
+    </head>
     <body>
         <div class="x-nav">
             <span class="layui-breadcrumb" lay-separator=">">
@@ -80,31 +89,31 @@
                 </div>
             </div>
             <div class='layui-form-item'>
-                <label class="layui-form-label" style="width: 10%;">开启投影机</label>
-                <div class="layui-input-block" style="margin-left: 10%;">
+                <label class="layui-form-label">开启投影机</label>
+                <div class="layui-input-block">
                     <input id='f_ord1' type="text" name="title1" autocomplete="off" class="layui-input" lay-verify="inputnum"> </div>
             </div>
             <div class='layui-form-item'>
-                <label class="layui-form-label" style="width: 10%;">关闭投影机</label>
-                <div class="layui-input-block" style="margin-left: 10%;">
+                <label class="layui-form-label">关闭投影机</label>
+                <div class="layui-input-block">
                     <input id='f_ord2' type="text" name="title2" autocomplete="off" class="layui-input" lay-verify="inputnum"> </div>
             </div>
             <div class='layui-form-item'>
-                <label class="layui-form-label" style="width: 10%;">视频信号源1</label>
-                <div class="layui-input-block" style="margin-left:10%;">
+                <label class="layui-form-label">视频信号源1</label>
+                <div class="layui-input-block">
                     <input id='f_ord3' type="text" name="title3" autocomplete="off" class="layui-input" lay-verify="inputnum"> </div>
             </div>
             <div class='layui-form-item'>
-                <label class="layui-form-label" style="width: 10%;">视频信号源2</label>
-                <div class="layui-input-block" style="margin-left:10%;">
+                <label class="layui-form-label">视频信号源2</label>
+                <div class="layui-input-block">
                     <input id='f_ord4' type="text" name="title4" autocomplete="off" class="layui-input" lay-verify="inputnum"> </div>
             </div>
             <div class="layui-form-item">
-                <div class="layui-input-block" style="margin-left:10%;">
+                <div class="layui-input-block">
                     <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="demo1">提交</button>
                 </div>
             </div>
-            <div class="layui-form-item" style="padding-left: 20px;">
+            <div class="layui-form-item">
                 <div class="layui-form-mid layui-word-aux">注：请输入十六进制数与英文逗号的组合或者十六进制数与空格组合。最后一位后面不能有空格，十六进制数必须是俩位,如：“01,01,01,aa,02,”。</div>
             </div>
         </form>
