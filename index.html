@@ -63,7 +63,6 @@
             function forbidBackSpace(e) {
                 var ev = e || window.event;
                 var obj = ev.target || ev.srcElement;
-                console.log(obj)
                 var t = obj.type || obj.getAttribute('type');
                 var vReadOnly = obj.readOnly;
                 var vDisabled = obj.disabled;
@@ -73,6 +72,8 @@
                 var flag2 = ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea";
                 if(flag2 || flag1) return false;
             }
+            
+            
             layui.use(['form', 'layer'], function () {
                 var form = layui.form,
                     layer = layui.layer,

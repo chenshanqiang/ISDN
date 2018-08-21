@@ -79,7 +79,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">室温</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="seven" class="layui-input" disabled="disabled" id='indoor_temperature'> </div>
+                            <input type="text" name="seven" class="layui-input" disabled="disabled" id='indoor_settingfinalerature'> </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">工作电流</label>
@@ -109,8 +109,8 @@
                             <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_power_on" lay-submit="" id="air_conditioning_power_on">开机</button>
                             <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_power_off" lay-submit="" id="air_conditioning_power_off">关机</button>
                             <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_mode" lay-submit="" id="air_conditioning_mode">模式</button>
-                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_temperature_plus" lay-submit="" id="air_conditioning_temperature_plus">温度+</button>
-                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_temperature_minus" lay-submit="" id="air_conditioning_temperature_minus">温度－</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_settingfinalerature_plus" lay-submit="" id="air_conditioning_settingfinalerature_plus">温度+</button>
+                            <button class="layui-btn layui-btn-normal" lay-filter="air_conditioning_settingfinalerature_minus" lay-submit="" id="air_conditioning_settingfinalerature_minus">温度－</button>
                         </div>
                     </div>
                 </div>
@@ -128,616 +128,37 @@
                 layer = layui.layer,
                     form = layui.form,
                     $ = layui.jquery;
-                /*select监听事件开始*/
-                var selcval = $('#selc').val(),
-                    resultone = protocal_get('air_cond_one', null),
-                    resulttwo = protocal_get('air_cond_two', null),
-                    settingvalue = $('#setting').val(),
-                    settingvaluearray = settingvalue.split(''),
-                    settingfinal = settingvaluearray[0] + settingvaluearray[1];
-                if(settingfinal <= '16') {
-                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                } else if(settingfinal >= '30') {
-                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                } else {
-                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                }
-                if(resultone[0] == '0' && resulttwo == '0') {
+                var resultone = protocal_get('air_cond_one', null),
+                    resulttwo = protocal_get('air_cond_two', null);
+                if(resultone[0] == '0' && resulttwo[0] == '0') {
                     $('#selc').attr('disabled', '');
-                    form.render('select');
-                    return false;
-                } else {
-                    $('#selc').removeAttr('disabled');
                 }
-                if(resultone[0] == '0') {
-                    $('#selc').val('空调2')
-                    $('#optionone').attr('disabled', "")
-                    form.render('select');
-                } else {
-                    $('#optionone').removeAttr('disabled');
-                    form.render('select');
-                    if(selcval == '空调1') {
-                        /*空调1开始*/
-                        buttonname('air_conditioning_power_on', 'air_one_work');
-                        buttonname('air_conditioning_power_off', 'air_one_work');
-                        buttonname('air_conditioning_mode', 'air_one_work');
-                        buttonname('air_conditioning_temperature_plus', 'air_one_work');
-                        buttonname('air_conditioning_temperature_minus', 'air_one_work');
-                        try {
-                            var resultonecomputerone = protocal_get('air_one', null);
-                            /*var resultonecomputerone = ['1','1','16','1','1','5','0','1','1','1'];*/
-                            if(resultonecomputerone.length < 10) {
-                                //throw "COM1 result count failure";
-                            } else {
-                                $("#conditioner_location").val(resultonecomputerone[0]);
-                                switch(resultonecomputerone[1]) {
-                                    case '0':
-                                        $("#conditioner_status").val('离线');
-                                        break;
-                                    case '1':
-                                        $("#conditioner_status").val('正常');
-                                        break;
-                                }
-                                $("#setting").val(resultonecomputerone[2] + "℃");
-                                $("#indoor_temperature").val(resultonecomputerone[3] + "℃");
-                                $("#humidity").val(resultonecomputerone[4] + "%");
-                                switch(resultonecomputerone[5]) {
-                                    case '0':
-                                        $("#mode").val('空');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '1':
-                                        $("#mode").val('制热');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '29') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else if(temp == '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '17') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        break;
-                                    case '2':
-                                        $("#mode").val('制冷');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                        $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '29') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else if(temp == '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '17') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        break;
-                                    case '3':
-                                        $("#mode").val('送风');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '4':
-                                        $("#mode").val('抽湿');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '5':
-                                        $("#mode").val('自动');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                }
-                                switch(resultonecomputerone[6]) {
-                                    case '0':
-                                        $("#running_status").val('停止');
-                                        break;
-                                    case '1':
-                                        $("#running_status").val('启动');
-                                        break;
-                                }
-                                $("#working_current").val(resultonecomputerone[7] + "A");
-                                $("#working_voltage").val(resultonecomputerone[8] + "V");
-                                $("#current_power").val(resultonecomputerone[9] + "W");
-                            }
-                            form.render();
-                        } catch(err) {}
-                        /*空调1结束*/
-                    } else {}
+                if(resultone[0] == '1' && resulttwo[0] == '1') {
+                    $('#selc').val('空调1');
+                    airCondOne();
                 }
-                if(resulttwo[0] == '0') {
+                if(resultone[0] == '0' && resulttwo[0] == '1') {
+                    $('#selc').val('空调2');
+                    $('#optionone').attr('disabled', "");
+                    airCondTwo();
+                }
+                if(resultone[0] == '1' && resulttwo[0] == '0') {
                     $('#selc').val('空调1');
                     $('#optiontwo').attr('disabled', "");
-                    form.render('select');
-                } else {
-                    $('#optiontwo').removeAttr('disabled');
-                    form.render('select');
-                    if(selcval == '空调2') {
-                        /*空调2开始*/
-                        buttonname('air_conditioning_power_on', 'air_two_work');
-                        buttonname('air_conditioning_power_off', 'air_two_work');
-                        buttonname('air_conditioning_mode', 'air_two_work');
-                        buttonname('air_conditioning_temperature_plus', 'air_two_work');
-                        buttonname('air_conditioning_temperature_minus', 'air_two_work');
-                        try {
-                            var resultonecomputertwo = protocal_get('air_two', null);
-                            /*var resultonecomputertwo = ['1','1','16','1','1','5','0','1','1','1'];*/
-                            if(resultonecomputertwo.length < 10) {
-                                //throw "COM1 result count failure";
-                            } else {
-                                $("#conditioner_location").val(resultonecomputertwo[0]);
-                                switch(resultonecomputertwo[1]) {
-                                    case '0':
-                                        $("#conditioner_status").val('离线');
-                                        break;
-                                    case '1':
-                                        $("#conditioner_status").val('正常');
-                                        break;
-                                }
-                                $("#setting").val(resultonecomputertwo[2] + "℃");
-                                $("#indoor_temperature").val(resultonecomputertwo[3] + "℃");
-                                $("#humidity").val(resultonecomputertwo[4] + "%");
-                                switch(resultonecomputertwo[5]) {
-                                    case '0':
-                                        $("#mode").val('空');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '1':
-                                        $("#mode").val('制热');
-                                        $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '29') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else if(temp == '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '17') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        break;
-                                    case '2':
-                                        $("#mode").val('制冷');
-                                        $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '29') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_mode', '3');
-                                            } else if(temp == '30') {
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                            var temp = $('#setting').val();
-                                            if(temp == '17') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                airConditioning('air_conditioning_temperature_minus', '4');
-                                            } else if(temp == '16') {
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            } else {
-                                                airConditioning('air_conditioning_mode', '3');
-                                                $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            }
-                                        })
-                                        break;
-                                    case '3':
-                                        $("#mode").val('送风');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '4':
-                                        $("#mode").val('抽湿');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                    case '5':
-                                        $("#mode").val('自动');
-                                        $('#air_conditioning_temperature_plus').off('click');
-                                        $('#air_conditioning_temperature_minus').off('click');
-                                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                        break;
-                                }
-                                switch(resultonecomputertwo[6]) {
-                                    case '0':
-                                        $("#running_status").val('停止');
-                                        break;
-                                    case '1':
-                                        $("#running_status").val('启动');
-                                        break;
-                                }
-                                $("#working_current").val(resultonecomputertwo[7] + "A");
-                                $("#working_voltage").val(resultonecomputertwo[8] + "V");
-                                $("#current_power").val(resultonecomputertwo[9] + "W");
-                            }
-                        } catch(err) {}
-                        /*空调2结束*/
-                    } else {}
+                    airCondOne();
                 }
                 form.render();
-                setInterval(function () {
-                    /*select监听事件开始*/
-                    var selcval = $('#selc').val(),
-                        resultone = protocal_get('air_cond_one', null),
-                        resulttwo = protocal_get('air_cond_two', null),
-                        settingvalue = $('#setting').val(),
-                        settingvaluearray = settingvalue.split(''),
-                        settingfinal = settingvaluearray[0] + settingvaluearray[1];
-                    if(settingfinal <= '16') {
-                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                    } else if(settingfinal >= '30') {
-                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                    } else {
-                        $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                        $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
+                /*监听按钮click事件开始*/
+                form.on('select(selc)', function (data) {
+                    if(data.value == '空调1') {
+                        airCondOne();
                     }
-                    if(resultone[0] == '0' && resulttwo == '0') {
-                        $('#selc').attr('disabled', '');
-                        form.render('select');
-                        return false;
-                    } else {
-                        $('#selc').removeAttr('disabled');
-                    }
-                    if(resultone[0] == '0') {
-                        $('#selc').val('空调2')
-                        $('#optionone').attr('disabled', "")
-                        form.render('select');
-                    } else {
-                        $('#optionone').removeAttr('disabled');
-                        form.render('select');
-                        if(selcval == '空调1') {
-                            /*空调1开始*/
-                            buttonname('air_conditioning_power_on', 'air_one_work');
-                            buttonname('air_conditioning_power_off', 'air_one_work');
-                            buttonname('air_conditioning_mode', 'air_one_work');
-                            buttonname('air_conditioning_temperature_plus', 'air_one_work');
-                            buttonname('air_conditioning_temperature_minus', 'air_one_work');
-                            try {
-                                var resultonecomputerone = protocal_get('air_one', null);
-                                /*var resultonecomputerone = ['1','1','16','1','1','5','0','1','1','1'];*/
-                                if(resultonecomputerone.length < 10) {
-                                    //throw "COM1 result count failure";
-                                } else {
-                                    $("#conditioner_location").val(resultonecomputerone[0]);
-                                    switch(resultonecomputerone[1]) {
-                                        case '0':
-                                            $("#conditioner_status").val('离线');
-                                            break;
-                                        case '1':
-                                            $("#conditioner_status").val('正常');
-                                            break;
-                                    }
-                                    $("#setting").val(resultonecomputerone[2] + "℃");
-                                    $("#indoor_temperature").val(resultonecomputerone[3] + "℃");
-                                    $("#humidity").val(resultonecomputerone[4] + "%");
-                                    switch(resultonecomputerone[5]) {
-                                        case '0':
-                                            $("#mode").val('空');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '1':
-                                            $("#mode").val('制热');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '29') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else if(temp == '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '17') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            break;
-                                        case '2':
-                                            $("#mode").val('制冷');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                            $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '29') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else if(temp == '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '17') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            break;
-                                        case '3':
-                                            $("#mode").val('送风');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '4':
-                                            $("#mode").val('抽湿');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '5':
-                                            $("#mode").val('自动');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                    }
-                                    switch(resultonecomputerone[6]) {
-                                        case '0':
-                                            $("#running_status").val('停止');
-                                            break;
-                                        case '1':
-                                            $("#running_status").val('启动');
-                                            break;
-                                    }
-                                    $("#working_current").val(resultonecomputerone[7] + "A");
-                                    $("#working_voltage").val(resultonecomputerone[8] + "V");
-                                    $("#current_power").val(resultonecomputerone[9] + "W");
-                                }
-                                form.render();
-                            } catch(err) {}
-                            /*空调1结束*/
-                        } else {}
-                    }
-                    if(resulttwo[0] == '0') {
-                        $('#selc').val('空调1');
-                        $('#optiontwo').attr('disabled', "");
-                        form.render('select');
-                    } else {
-                        $('#optiontwo').removeAttr('disabled');
-                        form.render('select');
-                        if(selcval == '空调2') {
-                            /*空调2开始*/
-                            buttonname('air_conditioning_power_on', 'air_two_work');
-                            buttonname('air_conditioning_power_off', 'air_two_work');
-                            buttonname('air_conditioning_mode', 'air_two_work');
-                            buttonname('air_conditioning_temperature_plus', 'air_two_work');
-                            buttonname('air_conditioning_temperature_minus', 'air_two_work');
-                            try {
-                                var resultonecomputertwo = protocal_get('air_two', null);
-                                /*var resultonecomputertwo = ['1','1','16','1','1','5','0','1','1','1'];*/
-                                if(resultonecomputertwo.length < 10) {
-                                    //throw "COM1 result count failure";
-                                } else {
-                                    $("#conditioner_location").val(resultonecomputertwo[0]);
-                                    switch(resultonecomputertwo[1]) {
-                                        case '0':
-                                            $("#conditioner_status").val('离线');
-                                            break;
-                                        case '1':
-                                            $("#conditioner_status").val('正常');
-                                            break;
-                                    }
-                                    $("#setting").val(resultonecomputertwo[2] + "℃");
-                                    $("#indoor_temperature").val(resultonecomputertwo[3] + "℃");
-                                    $("#humidity").val(resultonecomputertwo[4] + "%");
-                                    switch(resultonecomputertwo[5]) {
-                                        case '0':
-                                            $("#mode").val('空');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '1':
-                                            $("#mode").val('制热');
-                                            $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '29') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else if(temp == '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '17') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            break;
-                                        case '2':
-                                            $("#mode").val('制冷');
-                                            
-                                            
-                                            
-                                            $('#air_conditioning_temperature_plus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '29') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                } else if(temp == '30') {
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            $('#air_conditioning_temperature_minus').off('click').on('click', function () {
-                                                var temp = $('#setting').val();
-                                                if(temp == '17') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                    airConditioning('air_conditioning_temperature_minus', '4');
-                                                } else if(temp == '16') {
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                                } else {
-                                                    airConditioning('air_conditioning_mode', '3');
-                                                    $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-normal');
-                                                    $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-normal');
-                                                }
-                                            })
-                                            break;
-                                        case '3':
-                                            $("#mode").val('送风');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '4':
-                                            $("#mode").val('抽湿');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                        case '5':
-                                            $("#mode").val('自动');
-                                            $('#air_conditioning_temperature_plus').off('click');
-                                            $('#air_conditioning_temperature_minus').off('click');
-                                            $('#air_conditioning_temperature_plus').attr('class', 'layui-btn layui-btn-disabled');
-                                            $('#air_conditioning_temperature_minus').attr('class', 'layui-btn layui-btn-disabled');
-                                            break;
-                                    }
-                                    switch(resultonecomputertwo[6]) {
-                                        case '0':
-                                            $("#running_status").val('停止');
-                                            break;
-                                        case '1':
-                                            $("#running_status").val('启动');
-                                            break;
-                                    }
-                                    $("#working_current").val(resultonecomputertwo[7] + "A");
-                                    $("#working_voltage").val(resultonecomputertwo[8] + "V");
-                                    $("#current_power").val(resultonecomputertwo[9] + "W");
-                                }
-                            } catch(err) {}
-                            /*空调2结束*/
-                        } else {}
+                    if(data.value == '空调2') {
+                        airCondTwo();
                     }
                     form.render();
-                }, 2000);
-                /*监听按钮click事件开始*/
+                    return false;
+                });
                 form.on('submit(air_conditioning_power_on)', function (data) {
                     airConditioning('air_conditioning_power_on', '0');
                     return false;
@@ -751,15 +172,381 @@
                     return false;
                 });
                 /*监听按钮click事件结束*/
-                //监听select事件
-                form.on('select(selc)', function (data) {
-                    setintervaltimeairconditioner();
-                });
             });
-
+            setInterval(function () {
+                var selc = $('#selc').val();
+                if(selc == '空调1') {
+                    var result = protocal_get('air_one', null);
+                    airCondOne();
+                } else {
+                    var result = protocal_get('air_two', null);
+                    airCondTwo();
+                }
+                
+            }, 2000);
+            /*空调1的状态*/
+            function airCondOne() {
+                buttonname('air_conditioning_power_on', 'air_one_work');
+                buttonname('air_conditioning_power_off', 'air_one_work');
+                buttonname('air_conditioning_mode', 'air_one_work');
+                buttonname('air_conditioning_settingfinalerature_plus', 'air_one_work');
+                buttonname('air_conditioning_settingfinalerature_minus', 'air_one_work');
+                try {
+                    var resultonecomputerone = initPlusMin();
+                    if(resultonecomputerone.length < 10) {
+                        //throw "COM1 result count failure";
+                    } else {
+                        $("#conditioner_location").val(resultonecomputerone[0]);
+                        switch(resultonecomputerone[1]) {
+                            case '0':
+                                $("#conditioner_status").val('离线');
+                                break;
+                            case '1':
+                                $("#conditioner_status").val('正常');
+                                break;
+                        }
+                        $("#setting").val(resultonecomputerone[2] + "℃");
+                        $("#indoor_settingfinalerature").val(resultonecomputerone[3] + "℃");
+                        $("#humidity").val(resultonecomputerone[4] + "%");
+                        switch(resultonecomputerone[5]) {
+                            case '0':
+                                $("#mode").val('空');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '1':
+                                var settingfinal = setting();
+                                if(settingfinal >= 30) {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else if(settingfinal <= 16) {
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                }
+                                $("#mode").val('制热');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    if(settingfinal == 29) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                    } else if(settingfinal >= 30) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    if(settingfinal == 17) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                    } else if(settingfinal <= 16) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                break;
+                            case '2':
+                                var settingfinal = setting();
+                                if(settingfinal >= 30) {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else if(settingfinal <= 16) {
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                }
+                                $("#mode").val('制冷');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    if(settingfinal == 29) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                    } else if(settingfinal >= 30) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    if(settingfinal == 17) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                    } else if(settingfinal <= 16) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                break;
+                            case '3':
+                                $("#mode").val('送风');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '4':
+                                $("#mode").val('抽湿');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '5':
+                                $("#mode").val('自动');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });;
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                        }
+                        switch(resultonecomputerone[6]) {
+                            case '0':
+                                $("#running_status").val('停止');
+                                break;
+                            case '1':
+                                $("#running_status").val('启动');
+                                break;
+                        }
+                        $("#working_current").val(resultonecomputerone[7] + "A");
+                        $("#working_voltage").val(resultonecomputerone[8] + "V");
+                        $("#current_power").val(resultonecomputerone[9] + "W");
+                    }
+                } catch(err) {}
+            }
+            /*空调2的状态*/
+            function airCondTwo() {
+                buttonname('air_conditioning_power_on', 'air_two_work');
+                buttonname('air_conditioning_power_off', 'air_two_work');
+                buttonname('air_conditioning_mode', 'air_two_work');
+                buttonname('air_conditioning_settingfinalerature_plus', 'air_two_work');
+                buttonname('air_conditioning_settingfinalerature_minus', 'air_two_work');
+                try {
+                    var resultonecomputertwo = initPlusMin();
+                    if(resultonecomputertwo.length < 10) {
+                        //throw "COM1 result count failure";
+                    } else {
+                        $("#conditioner_location").val(resultonecomputertwo[0]);
+                        switch(resultonecomputertwo[1]) {
+                            case '0':
+                                $("#conditioner_status").val('离线');
+                                break;
+                            case '1':
+                                $("#conditioner_status").val('正常');
+                                break;
+                        }
+                        $("#setting").val(resultonecomputertwo[2] + "℃");
+                        $("#indoor_settingfinalerature").val(resultonecomputertwo[3] + "℃");
+                        $("#humidity").val(resultonecomputertwo[4] + "%");
+                        switch(resultonecomputertwo[5]) {
+                            case '0':
+                                $("#mode").val('空');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '1':
+                                var settingfinal = setting();
+                                if(settingfinal >= 30) {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else if(settingfinal <= 16) {
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                    form.render();
+                                } else {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                }
+                                $("#mode").val('制热');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    if(settingfinal == 29) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                    } else if(settingfinal >= 30) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_plus', '3');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    if(settingfinal == 17) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                    } else if(settingfinal <= 16) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                break;
+                            case '2':
+                                var settingfinal = setting();
+                                if(settingfinal >= 30) {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else if(settingfinal <= 16) {
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                } else {
+                                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                }
+                                $("#mode").val('制冷');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    if(settingfinal == 29) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_mode', '3');
+                                    } else if(settingfinal >= 30) {
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_mode', '3');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    if(settingfinal == 17) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                    } else if(settingfinal <= 16) {
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                    } else {
+                                        airConditioning('air_conditioning_settingfinalerature_minus', '4');
+                                        $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                                        $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                                    }
+                                    return false;
+                                })
+                                break;
+                            case '3':
+                                $("#mode").val('送风');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '4':
+                                $("#mode").val('抽湿');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                            case '5':
+                                $("#mode").val('自动');
+                                $('#air_conditioning_settingfinalerature_plus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_minus').off('click').on('click', function () {
+                                    return false;
+                                });
+                                $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                                $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                                break;
+                        }
+                        switch(resultonecomputertwo[6]) {
+                            case '0':
+                                $("#running_status").val('停止');
+                                break;
+                            case '1':
+                                $("#running_status").val('启动');
+                                break;
+                        }
+                        $("#working_current").val(resultonecomputertwo[7] + "A");
+                        $("#working_voltage").val(resultonecomputertwo[8] + "V");
+                        $("#current_power").val(resultonecomputertwo[9] + "W");
+                    }
+                } catch(err) {}
+            }
+            /*给温度加减按钮赋状态*/
+            function initPlusMin() {
+                var selc = $('#selc').val();
+                if(selc == '空调1') {
+                    var result = protocal_get('air_one', null);
+                    /*var result = ['1', '1', '12.0', '2', '1', '1', '1', '1', '1', '1'];*/
+                } else {
+                    var result = protocal_get('air_two', null);
+                    /*var result = ['1', '1', '17.0', '1', '1', '1', '0', '1', '1', '1'];*/
+                }
+                if(result[2] <= 16) {
+                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-disabled');
+                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                } else if(result[2] >= 30) {
+                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-disabled');
+                } else {
+                    $('#air_conditioning_settingfinalerature_minus').attr('class', 'layui-btn layui-btn-normal');
+                    $('#air_conditioning_settingfinalerature_plus').attr('class', 'layui-btn layui-btn-normal');
+                }
+                return result;
+            }
+            /*获得设定内的的温度值*/
+            function setting() {
+                var settingvalue = $('#setting').val(),
+                    regTest = /\./.test(settingvalue),
+                    settingfinal;
+                switch(regTest) {
+                    case false:
+                        settingfinal = settingvalue.replace(/℃/, '');
+                        break;
+                    case true:
+                        settingfinal = settingvalue.replace(/℃/, '');
+                        settingfinal = settingfinal.split('.')[0];
+                        break;
+                }
+                return settingfinal;
+            }
+            /*发送指令*/
             function airConditioning(id, value) {
                 try {
-                    var name = $('#' + id).attr('name')
+                    var name = $('#' + id).attr('name');
                     var result = protocal_set(name, value);
                     if(result[0] == 'ok') {
                         return false;
@@ -768,7 +555,7 @@
                     }
                 } catch(err) {}
             }
-
+            /*给按钮赋值*/
             function buttonname(id, value) {
                 $('#' + id).attr('name', value);
             }
